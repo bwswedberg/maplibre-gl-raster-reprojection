@@ -1,0 +1,73 @@
+{
+  "name": "maplibre-gl-raster-reprojection",
+  "version": "0.0.0",
+  "description": "Reproject maplibre raster tiles on the fly in the browser",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --p ./tsconfig-build.json && vite build",
+    "preview": "vite preview",
+    "format": "prettier --write .",
+    "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
+    "lint:ci": "eslint --ignore-path .gitignore .",
+    "test": "vitest watch",
+    "test:ci": "vitest run --coverage --no-cache",
+    "typecheck": "tsc --noEmit",
+    "e2e": "playwright test",
+    "e2e:ci": "start-server-and-test e2e:build 3000 e2e:run",
+    "preflight": "npm run format && npm run typecheck && npm run lint:ci && npm run test:ci"
+  },
+  "peerDependencies": {
+    "maplibre-gl": "> 4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "maplibre-gl": {
+      "optional": true
+    }
+  },
+  "keywords": [
+    "map",
+    "tile",
+    "maplibre-gl",
+    "wgs84",
+    "epsg:4326",
+    "epsg:3857"
+  ],
+  "author": "bwswedberg",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "@types/node": "^20.11.17",
+    "@typescript-eslint/eslint-plugin": "^8.8.1",
+    "@typescript-eslint/parser": "^8.8.1",
+    "@vitest/coverage-v8": "^2.1.2",
+    "canvas": "^2.11.2",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.3",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jest": "^28.8.3",
+    "eslint-plugin-jest-dom": "^5.4.0",
+    "eslint-plugin-playwright": "^1.6.2",
+    "eslint-plugin-testing-library": "^6.3.0",
+    "happy-dom": "^15.7.4",
+    "maplibre-gl": "^4.7.1",
+    "playwright": "^1.48.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.2.2",
+    "vite": "^5.4.8",
+    "vite-plugin-dts": "^4.2.3",
+    "vite-tsconfig-paths": "^5.0.1",
+    "vitest": "^2.1.2"
+  },
+  "dependencies": {
+    "tilebelt-wgs84": "^1.0.4"
+  }
+}

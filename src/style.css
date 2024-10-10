@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+#map {
+  width: 100%;
+  height: 100vh;
+}
+.legend {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  min-width: 100px;
+  padding: 4px;
+  background-color: #fff;
+}
+.legendItem {
+  display: block;
+}
