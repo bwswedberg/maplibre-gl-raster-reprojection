@@ -20,8 +20,9 @@
     "test": "vitest watch",
     "test:ci": "vitest run --coverage --no-cache",
     "typecheck": "tsc --noEmit",
-    "e2e": "playwright test",
-    "e2e:ci": "start-server-and-test e2e:build 3000 e2e:run",
+    "e2e:build": "npm run build && npm run preview",
+    "e2e:run": "playwright test",
+    "e2e:ci": "start-server-and-test e2e:build 5173 e2e:run",
     "preflight": "npm run format && npm run typecheck && npm run lint:ci && npm run test:ci"
   },
   "peerDependencies": {
