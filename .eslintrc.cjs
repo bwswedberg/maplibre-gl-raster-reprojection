@@ -60,11 +60,7 @@ module.exports = {
     {
       files: ["src/**/*.test.{js,ts}"],
       plugins: ["jest", "jest-dom", "testing-library"],
-      extends: [
-        "plugin:jest/recommended",
-        "plugin:jest-dom/recommended",
-        "prettier"
-      ],
+      extends: ["plugin:jest/recommended", "plugin:jest-dom/recommended", "prettier"],
       env: {
         "jest/globals": true
       },
@@ -82,7 +78,7 @@ module.exports = {
     {
       files: ["lib/**/*.e2e.ts"],
       plugins: ["playwright"],
-      extends: ["plugin:playwright/playwright-test", "prettier"],
+      extends: ["plugin:playwright/playwright-test", "prettier"]
     },
 
     // Node

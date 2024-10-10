@@ -28,9 +28,9 @@
       "~/lib/*": ["./lib/*"],
       "~/test/*": ["./lib/*"],
       "~/public/*": ["./public/*"]
-    },
+    }
   },
 
-   // Vite takes care of building everything, not tsc.
-   "noEmit": true
+  // Vite takes care of building everything, not tsc.
+  "noEmit": true
 }

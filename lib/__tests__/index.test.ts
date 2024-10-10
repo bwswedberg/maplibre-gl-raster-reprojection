@@ -1,5 +1,5 @@
 import "..";
 
-test('should run jest', () => {
+test("should run jest", () => {
   expect(true).toBeTruthy();
 });

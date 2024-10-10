@@ -3,7 +3,7 @@ interface TileCacheOptions<Item = unknown> {
   maxCache: number;
 }
 
-type TileCacheListener<T = unknown> = (item: T, error?: unknown) => void
+type TileCacheListener<T = unknown> = (item: T, error?: unknown) => void;
 
 interface TileCacheItem<T = unknown> {
   error?: string;
@@ -12,8 +12,8 @@ interface TileCacheItem<T = unknown> {
 }
 
 const defaultOptions: Partial<TileCacheOptions> = {
-  maxCache: 10,
-}
+  maxCache: 10
+};
 
 export class TileCache<Item = unknown> {
   private options: TileCacheOptions<Item>;
@@ -21,9 +21,9 @@ export class TileCache<Item = unknown> {
   private lru: string[] = []; // order by [least recently used, ..., most recently used]
 
   constructor(options: TileCacheOptions<Item>) {
-    this.options = { 
+    this.options = {
       ...defaultOptions,
-      ...options, 
+      ...options
     };
   }
 
@@ -56,7 +56,7 @@ export class TileCache<Item = unknown> {
   private publish(key: string, item: Item | null, error?: unknown) {
     this.items[key].item = item;
     if (error) this.items[key].error = `${error}`;
-    this.items[key].listeners?.forEach(listener => listener(item, error));
+    this.items[key].listeners?.forEach((listener) => listener(item, error));
     delete this.items[key].listeners;
     this.removeLeastRecentlyUsed();
   }
@@ -76,9 +76,10 @@ export class TileCache<Item = unknown> {
       this.pushItem(key, {
         listeners: [listener]
       });
-      this.options.fetchTile(key)
-        .then(value => this.publish(key, value))
-        .catch(error => this.publish(key, null, error));
+      this.options
+        .fetchTile(key)
+        .then((value) => this.publish(key, value))
+        .catch((error) => this.publish(key, null, error));
     }
   }
 

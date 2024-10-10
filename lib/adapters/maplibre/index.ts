@@ -1,1 +1,1 @@
-export * from './maplibreTileAdapterProtocol';
+export * from "./maplibreTileAdapterProtocol";

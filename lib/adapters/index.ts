@@ -1,1 +1,1 @@
-export * from './maplibre'
+export * from "./maplibre";
