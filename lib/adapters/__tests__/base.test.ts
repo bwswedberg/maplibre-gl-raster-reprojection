@@ -6,7 +6,7 @@ import { TileCache } from "lib/util";
 import { epsg4326ToEpsg3857Presets } from "lib/presets";
 import { loadTile } from "../base";
 
-jest.mock("lib/util/dom");
+vi.mock("lib/util/dom");
 
 const { destinationTileSize, sourceTileSize } = trondheim.metadata;
 
@@ -43,7 +43,7 @@ describe("loadTile", () => {
       interval: [destinationTileSize, destinationTileSize]
     });
 
-    const checkCanceledMock = jest.fn().mockReturnValue(false);
+    const checkCanceledMock = vi.fn().mockReturnValue(false);
 
     const output = await loadTile({
       ctx,
@@ -72,7 +72,7 @@ describe("loadTile", () => {
       interval: [destinationTileSize, 1]
     });
 
-    const checkCanceledMock = jest.fn().mockReturnValue(false);
+    const checkCanceledMock = vi.fn().mockReturnValue(false);
 
     const output = await loadTile({
       ctx,
@@ -101,7 +101,7 @@ describe("loadTile", () => {
       interval: [destinationTileSize, destinationTileSize]
     });
 
-    const checkCanceledMock = jest.fn().mockReturnValue(true);
+    const checkCanceledMock = vi.fn().mockReturnValue(true);
 
     const output = await loadTile({
       ctx,
@@ -125,7 +125,7 @@ describe("loadTile", () => {
       interval: [destinationTileSize, destinationTileSize]
     });
 
-    const checkCanceledMock = jest.fn().mockReturnValue(false);
+    const checkCanceledMock = vi.fn().mockReturnValue(false);
 
     const output = await loadTile({
       ctx,
@@ -143,7 +143,7 @@ describe("loadTile", () => {
       interval: [destinationTileSize, destinationTileSize]
     });
 
-    const checkCanceledMock = jest.fn().mockReturnValueOnce(false).mockReturnValue(true);
+    const checkCanceledMock = vi.fn().mockReturnValueOnce(false).mockReturnValue(true);
 
     const output = await loadTile({
       ctx,
@@ -170,7 +170,7 @@ describe("loadTile", () => {
       interval: [destinationTileSize, destinationTileSize]
     });
 
-    const checkCanceledMock = jest.fn().mockReturnValue(false);
+    const checkCanceledMock = vi.fn().mockReturnValue(false);
 
     const output = await loadTile({
       ctx,

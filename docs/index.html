@@ -1,13 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="A demo of the library Maplibre GL Raster Reprojection"
-    />
+    <meta name="description" content="A demo of the library Maplibre GL Raster Reprojection" />
     <title>Maplibre GL Raster Reprojection Demo</title>
     <link href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css" rel="stylesheet" />
     <script src="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js"></script>
@@ -49,40 +46,39 @@
         interval: [256, 1],
         ...window.MapTileAdapter.epsg4326ToEpsg3857Presets()
       });
-      maplibregl.addProtocol(
-        mtaProtocol.protocol, 
-        mtaProtocol.loader
-      );
+      maplibregl.addProtocol(mtaProtocol.protocol, mtaProtocol.loader);
 
       var map = new maplibregl.Map({
-        container: document.getElementById('map'),
+        container: document.getElementById("map"),
         style: {
           version: 8,
           sources: {
-            'basic4326-256': {
-              type: 'raster',
-              tiles: ['mta://bbox={bbox-epsg-3857}&z={z}&x={x}&y={y}://https://api.maptiler.com/maps/basic-4326/256/{sz}/{sx}/{sy}.png?key=PGe3q0z3e1cGtjXjPS5D'],
+            "basic4326-256": {
+              type: "raster",
+              tiles: [
+                "mta://bbox={bbox-epsg-3857}&z={z}&x={x}&y={y}://https://api.maptiler.com/maps/basic-4326/256/{sz}/{sx}/{sy}.png?key=PGe3q0z3e1cGtjXjPS5D"
+              ],
               tileSize: 256,
-              scheme: 'xyz'
+              scheme: "xyz"
             },
-            'osm': {
-              type: 'raster',
-              tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+            osm: {
+              type: "raster",
+              tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
               tileSize: 256,
-              scheme: 'xyz'
+              scheme: "xyz"
             }
           },
           layers: [
             {
-              id: 'osm-layer',
-              source: 'osm',
-              type: 'raster',
+              id: "osm-layer",
+              source: "osm",
+              type: "raster"
             },
             {
-              id: 'basic4326-256-layer',
-              source: 'basic4326-256',
-              type: 'raster',
-            },
+              id: "basic4326-256-layer",
+              source: "basic4326-256",
+              type: "raster"
+            }
           ]
         },
         center: [0, 45],
@@ -90,20 +86,19 @@
       });
 
       function updateVisibility(layerId, isVisible) {
-        var visibility = isVisible ? 'visible' : 'none';
-        map.setLayoutProperty(layerId, 'visibility', visibility);
+        var visibility = isVisible ? "visible" : "none";
+        map.setLayoutProperty(layerId, "visibility", visibility);
       }
 
       function handleLayerCheckboxChange(event) {
-        updateVisibility(event.target.name, event.target.checked)
-      };
-
-      var checkboxes = document.getElementsByClassName('layerCheckbox');
-
-      for (var i = 0; i < checkboxes.length; i++) {
-        checkboxes[i].addEventListener('change', handleLayerCheckboxChange);
+        updateVisibility(event.target.name, event.target.checked);
       }
 
+      var checkboxes = document.getElementsByClassName("layerCheckbox");
+
+      for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].addEventListener("change", handleLayerCheckboxChange);
+      }
     </script>
   </body>
 </html>

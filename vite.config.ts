@@ -4,7 +4,19 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import dts from "vite-plugin-dts";
 
 export default defineConfig({
+  // No real public folder. Only used for dev and test
+  publicDir: process.env.NODE_ENV !== 'production'
+    ? './test/assets'
+    : undefined,
+  plugins: [
+    tsconfigPaths(),
+    dts({
+      include: "lib",
+      exclude: ["**/__tests__", "**/__mocks__"]
+    })
+  ],
   build: {
+    copyPublicDir: false,
     lib: {
       entry: resolve(__dirname, "./lib/index.ts"),
       name: "maplibreRasterReprojection",
@@ -12,7 +24,6 @@ export default defineConfig({
       fileName: "maplibre-gl-raster-reprojection"
     }
   },
-  plugins: [tsconfigPaths(), dts({ include: "lib" })],
   test: {
     globals: true,
     environment: "happy-dom",

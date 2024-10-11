@@ -6,7 +6,7 @@ import { TileCache } from "lib/util";
 import { epsg4326ToEpsg3857Presets } from "lib/presets";
 import { drawSource } from "../source";
 
-jest.mock("lib/util/dom");
+vi.mock("lib/util/dom");
 
 describe("drawSource", () => {
   test("should return a canvas with metadata", async () => {

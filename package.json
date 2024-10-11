@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc --p ./tsconfig-build.json && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "format": "prettier --write .",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
@@ -20,9 +20,10 @@
     "test": "vitest watch",
     "test:ci": "vitest run --coverage --no-cache",
     "typecheck": "tsc --noEmit",
-    "e2e:build": "npm run build && npm run preview",
-    "e2e:run": "playwright test",
-    "e2e:ci": "start-server-and-test e2e:build 5173 e2e:run",
+    "e2e": "playwright test",
+    "e2e:install": "playwright install --with-deps chromium",
+    "e2e:ui": "playwright test --ui",
+    "e2e:ci": "playwright test",
     "preflight": "npm run format && npm run typecheck && npm run lint:ci && npm run test:ci"
   },
   "peerDependencies": {
@@ -45,6 +46,7 @@
   "license": "MIT",
   "devDependencies": {
     "@playwright/test": "^1.48.0",
+    "@types/jest-image-snapshot": "^6.4.0",
     "@types/node": "^20.11.17",
     "@typescript-eslint/eslint-plugin": "^8.8.1",
     "@typescript-eslint/parser": "^8.8.1",
@@ -57,8 +59,8 @@
     "eslint-plugin-jest": "^28.8.3",
     "eslint-plugin-jest-dom": "^5.4.0",
     "eslint-plugin-playwright": "^1.6.2",
-    "eslint-plugin-testing-library": "^6.3.0",
     "happy-dom": "^15.7.4",
+    "jest-image-snapshot": "^6.4.0",
     "maplibre-gl": "^4.7.1",
     "playwright": "^1.48.0",
     "prettier": "^3.3.3",

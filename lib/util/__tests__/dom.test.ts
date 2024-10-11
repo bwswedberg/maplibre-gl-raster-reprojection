@@ -1,10 +1,11 @@
+import { MockInstance } from "vitest";
 import { canvasToArrayBuffer, createCanvasContext, fetchImage } from "../dom";
 
 describe("createCanvasContext", () => {
-  let createElementSpy: jest.SpyInstance;
+  let createElementSpy: MockInstance;
 
   beforeEach(() => {
-    createElementSpy = jest.spyOn(document, "createElement");
+    createElementSpy = vi.spyOn(document, "createElement");
   });
 
   test("should return canvas", () => {
@@ -43,7 +44,7 @@ describe("createCanvasContext", () => {
 describe("canvasToArrayBuffer", () => {
   test("should resolve falsy blob", async () => {
     const mockCanvas = {
-      toBlob: jest.fn().mockImplementation(async (fn: () => Promise<void>) => {
+      toBlob: vi.fn().mockImplementation(async (fn: () => Promise<void>) => {
         await fn();
       })
     } as unknown as HTMLCanvasElement;
@@ -54,9 +55,9 @@ describe("canvasToArrayBuffer", () => {
   test("should resolve array buffer", async () => {
     const buf = new Uint8Array([]);
     const mockCanvas = {
-      toBlob: jest.fn().mockImplementation(async (fn: (blob: any) => Promise<any>) => {
+      toBlob: vi.fn().mockImplementation(async (fn: (blob: any) => Promise<any>) => {
         await fn({
-          arrayBuffer: jest.fn().mockResolvedValue(buf)
+          arrayBuffer: vi.fn().mockResolvedValue(buf)
         });
       })
     } as unknown as HTMLCanvasElement;
@@ -66,9 +67,9 @@ describe("canvasToArrayBuffer", () => {
 
   test("should reject with error", async () => {
     const mockCanvas = {
-      toBlob: jest.fn().mockImplementation(async (fn: (blob: any) => Promise<any>) => {
+      toBlob: vi.fn().mockImplementation(async (fn: (blob: any) => Promise<any>) => {
         await fn({
-          arrayBuffer: jest.fn().mockRejectedValue(new Error("Test error"))
+          arrayBuffer: vi.fn().mockRejectedValue(new Error("Test error"))
         });
       })
     } as unknown as HTMLCanvasElement;
@@ -78,10 +79,10 @@ describe("canvasToArrayBuffer", () => {
 
 describe("fetchImage", () => {
   const imageUrl = "http://test.com/image.png";
-  let imageSpy: jest.SpyInstance;
+  let imageSpy: MockInstance;
 
   beforeEach(() => {
-    imageSpy = jest.spyOn(window, "Image");
+    imageSpy = vi.spyOn(window, "Image");
   });
 
   test("should resolve an image", async () => {
@@ -90,7 +91,7 @@ describe("fetchImage", () => {
         crossOrigin: undefined,
         src: undefined
       };
-      image.decode = jest.fn().mockResolvedValue(image);
+      image.decode = vi.fn().mockResolvedValue(image);
       return image;
     });
 
@@ -105,7 +106,7 @@ describe("fetchImage", () => {
         crossOrigin: undefined,
         src: undefined
       };
-      image.decode = jest.fn().mockRejectedValue(new Error("Test image error"));
+      image.decode = vi.fn().mockRejectedValue(new Error("Test image error"));
       return image;
     });
 

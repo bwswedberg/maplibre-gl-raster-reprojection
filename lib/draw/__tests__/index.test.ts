@@ -6,7 +6,7 @@ import { TileCache } from "lib/util";
 import { epsg4326ToEpsg3857Presets } from "lib/presets";
 import { drawTile } from "..";
 
-jest.mock("lib/util/dom");
+vi.mock("lib/util/dom");
 
 const { destinationTileSize, sourceTileSize } = trondheim.metadata;
 
@@ -58,7 +58,7 @@ describe("drawTile", () => {
 
   test.each(trondheim.mappings.slice(2).map((d) => [d.destination.tile[2], d]))(
     `should return source canvas for zoom %j`,
-    async (label, mapping) => {
+    async (_label, mapping) => {
       const { destination, sources } = mapping;
 
       const sourceRequests = await Promise.all(

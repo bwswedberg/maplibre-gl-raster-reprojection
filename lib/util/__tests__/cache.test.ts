@@ -1,11 +1,12 @@
+import { Mock } from "vitest";
 import { TileCache } from "../cache";
 
-let fetchTileMock: jest.Mock;
+let fetchTileMock: Mock;
 const DELAY = 1000;
 
 beforeEach(() => {
-  jest.useFakeTimers();
-  fetchTileMock = jest.fn(async (key: string) => {
+  vi.useFakeTimers();
+  fetchTileMock = vi.fn(async (key: string) => {
     return new Promise((resolve) => {
       setTimeout(() => resolve(`fetched ${key}`), DELAY);
     });
@@ -13,8 +14,8 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  jest.clearAllTimers();
-  jest.useRealTimers();
+  vi.clearAllTimers();
+  vi.useRealTimers();
 });
 
 test("should initialize", () => {
@@ -32,11 +33,11 @@ test("should cache fetched items", async () => {
   });
 
   const reqPromise0 = cache.getTile("key-0");
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   await expect(reqPromise0).resolves.toBe("fetched key-0");
 
   const reqPromise1 = cache.getTile("key-0");
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   await expect(reqPromise1).resolves.toBe("fetched key-0");
 
   expect(fetchTileMock).toHaveBeenCalledTimes(1);
@@ -49,21 +50,21 @@ test("should remove old cached items when max cache size reached", async () => {
   });
 
   const reqPromise0 = cache.getTile("key-0");
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   await expect(reqPromise0).resolves.toBe("fetched key-0");
 
   const reqPromise1 = cache.getTile("key-1");
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   await expect(reqPromise1).resolves.toBe("fetched key-1");
 
   // removes tileKey0 from cache
   const reqPromise2 = cache.getTile("key-2");
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   await expect(reqPromise2).resolves.toBe("fetched key-2");
 
   // fetched again
   const reqPromise3 = cache.getTile("key-0");
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   await expect(reqPromise3).resolves.toBe("fetched key-0");
 
   expect(fetchTileMock).toHaveBeenCalledTimes(4);
@@ -81,7 +82,7 @@ test("should dedupe concurrent inflight requests", async () => {
 
   const reqPromise0 = cache.getTile("key-0");
   const reqPromise1 = cache.getTile("key-0");
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
 
   await expect(reqPromise0).resolves.toBe("fetched key-0");
   await expect(reqPromise1).resolves.toBe("fetched key-0");
@@ -102,6 +103,6 @@ test("should handle errors when fetching tile", async () => {
   });
 
   const reqPromise = cache.getTile("key-0");
-  jest.runOnlyPendingTimers();
+  vi.runOnlyPendingTimers();
   await expect(reqPromise).rejects.toThrow(errorMessage);
 });
