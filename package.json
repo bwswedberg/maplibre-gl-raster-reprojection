@@ -5,8 +5,15 @@
   "private": true,
   "sideEffects": false,
   "type": "module",
-  "main": "dist/main.js",
-  "types": "dist/main.d.ts",
+  "main": "dist/maplibreRasterReprojection.umd.cjs",
+  "module": "dist/maplibreRasterReprojection.js",
+  "types": "dist/types.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/maplibreRasterReprojection.js",
+      "require": "./dist/maplibreRasterReprojection.umd.cjs"
+    }
+  },
   "files": [
     "dist"
   ],
@@ -21,6 +28,7 @@
     "test:ci": "vitest run --coverage --no-cache",
     "typecheck": "tsc --noEmit",
     "e2e": "playwright test",
+    "e2e:serve": "serve -p 3000",
     "e2e:install": "playwright install --with-deps chromium",
     "e2e:ui": "playwright test --ui",
     "e2e:ci": "playwright test",
@@ -64,6 +72,7 @@
     "maplibre-gl": "^4.7.1",
     "playwright": "^1.48.0",
     "prettier": "^3.3.3",
+    "serve": "^14.2.3",
     "typescript": "^5.2.2",
     "vite": "^5.4.8",
     "vite-plugin-dts": "^4.2.3",

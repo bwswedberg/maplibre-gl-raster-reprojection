@@ -7,7 +7,7 @@ declare global {
   interface Window {
     maplibregl: typeof maplibregl;
 
-    MapTileAdapter: {
+    maplibreRasterReprojection: {
       maplibreTileAdapterProtocol: typeof maplibreTileAdapterProtocol;
       epsg4326ToEpsg3857Presets: typeof epsg4326ToEpsg3857Presets;
     };
@@ -16,10 +16,11 @@ declare global {
 
 test.describe("maplibreTileAdapterProtocol", () => {
   test("should render a maplibre map", async ({ page }, testinfo) => {
-    await page.goto("http://localhost:3000/maplibre.html");
+    await page.goto("/test/pages/maplibre.html");
 
     await page.evaluate(() => {
-      const { maplibreTileAdapterProtocol, epsg4326ToEpsg3857Presets } = window.MapTileAdapter;
+      const { maplibreTileAdapterProtocol, epsg4326ToEpsg3857Presets } =
+        window.maplibreRasterReprojection;
 
       const mtaProtocol = maplibreTileAdapterProtocol({
         sourceTileSize: 256,
@@ -38,7 +39,7 @@ test.describe("maplibreTileAdapterProtocol", () => {
             epsg4326source: {
               type: "raster",
               tiles: [
-                `${mtaProtocol.tileUrlPrefix}://http://localhost:3000/maptiler-epsg4326/{sz}/{sx}/{sy}.png`
+                `${mtaProtocol.tileUrlPrefix}://http://127.0.0.1:3000/test/assets/maptiler-epsg4326/{sz}/{sx}/{sy}.png`
               ],
               tileSize: 256,
               scheme: "xyz"

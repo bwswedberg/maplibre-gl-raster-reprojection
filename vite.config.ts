@@ -4,10 +4,9 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import dts from "vite-plugin-dts";
 
 export default defineConfig({
+  base: "./",
   // No real public folder. Only used for dev and test
-  publicDir: process.env.NODE_ENV !== 'production'
-    ? './test/assets'
-    : undefined,
+  publicDir: process.env.NODE_ENV !== "production" ? "./test/assets" : undefined,
   plugins: [
     tsconfigPaths(),
     dts({

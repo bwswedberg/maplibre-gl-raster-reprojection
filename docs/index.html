@@ -41,10 +41,10 @@
       </label>
     </div>
     <script defer>
-      var mtaProtocol = window.MapTileAdapter.maplibreTileAdapterProtocol({
+      var mtaProtocol = window.maplibreRasterReprojection.maplibreTileAdapterProtocol({
         tileSize: 256,
         interval: [256, 1],
-        ...window.MapTileAdapter.epsg4326ToEpsg3857Presets()
+        ...window.maplibreRasterReprojection.epsg4326ToEpsg3857Presets()
       });
       maplibregl.addProtocol(mtaProtocol.protocol, mtaProtocol.loader);
 

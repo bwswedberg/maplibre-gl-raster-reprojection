@@ -71,28 +71,28 @@ jobs:
       - name: ⚡ Run vitest
         run: npm run test:ci
 
-  # e2e:
-  #   name: 🎭 Playwright
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: ⬇️ Checkout repo
-  #       uses: actions/checkout@v4
+  e2e:
+    name: 🎭 Playwright
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
 
-  #     - name: ⎔ Setup node
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         cache: npm
-  #         cache-dependency-path: ./package.json
-  #         node-version: 20
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v4
+        with:
+          cache: npm
+          cache-dependency-path: ./package.json
+          node-version: 20
 
-  #     - name: 📥 Install deps
-  #       run: npm install
+      - name: 📥 Install deps
+        run: npm install
 
-  #     - name: 🛠 Setup e2e
-  #       run: npm run e2e:init
+      - name: 🛠 Setup e2e
+        run: npm run e2e:install
 
-  #     - name: ⚙️ Build
-  #       run: npm run build
+      - name: ⚙️ Build
+        run: npm run build
 
-  #     - name: 🎭 Playwright tests
-  #       run: npm run e2e:ci
+      - name: 🎭 Playwright tests
+        run: npm run e2e:ci
