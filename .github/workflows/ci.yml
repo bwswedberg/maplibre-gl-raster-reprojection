@@ -71,6 +71,11 @@ jobs:
       - name: ⚡ Run vitest
         run: npm run test:ci
 
+      - name: ⬆️ Upload results to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
   e2e:
     name: 🎭 Playwright
     runs-on: ubuntu-latest
