@@ -16,7 +16,7 @@ export const canvasToArrayBuffer = async (canvas: Canvas): Promise<ArrayBuffer |
 };
 
 export const fetchImage = async (url: string): Promise<Image> => {
-  return new Promise<Image>(async (resolve, reject) => {
+  return new Promise<Image>((resolve, reject) => {
     const img = new Image();
     img.onload = () => resolve(img);
     img.onerror = (err) => reject(err);

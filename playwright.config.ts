@@ -1,6 +1,7 @@
-import type { PlaywrightTestConfig } from "@playwright/test";
+import { defineConfig } from "@playwright/test";
 
-const config: PlaywrightTestConfig = {
+export default defineConfig({
+  outputDir: "playwright-results",
   webServer: [
     {
       command: "npm run e2e:serve",
@@ -15,6 +16,4 @@ const config: PlaywrightTestConfig = {
     screenshot: "only-on-failure"
   },
   testMatch: ["lib/**/*.e2e.ts"]
-};
-
-export default config;
+});

@@ -23,7 +23,7 @@ module.exports = {
   overrides: [
     // Typescript
     {
-      files: ["**/*.{ts}"],
+      files: ["**/*.{ts,tsx}"],
       plugins: ["@typescript-eslint", "import"],
       parser: "@typescript-eslint/parser",
       settings: {
@@ -58,8 +58,8 @@ module.exports = {
 
     // Jest/Vitest
     {
-      files: ["src/**/*.test.{js,ts}"],
-      plugins: ["jest", "jest-dom", "testing-library"],
+      files: ["**/*.test.{js,ts}"],
+      plugins: ["jest", "jest-dom"],
       extends: ["plugin:jest/recommended", "plugin:jest-dom/recommended", "prettier"],
       env: {
         "jest/globals": true
@@ -74,9 +74,9 @@ module.exports = {
       }
     },
 
-    // Cypress
+    // Playwright
     {
-      files: ["lib/**/*.e2e.ts"],
+      files: ["**/*.e2e.{ts}"],
       plugins: ["playwright"],
       extends: ["plugin:playwright/playwright-test", "prettier"]
     },

@@ -1,9 +1,9 @@
 import { Canvas } from "canvas";
-import { createTestCanvasImage, getMaptilerEpsg4326Url, getTestHTMLImageElement } from "test/util";
-import trondheim from "test/assets/trondheim.json";
+import { epsg4326ToEpsg3857Presets } from "lib/presets";
 import { Tile, Bbox, MapTileAdapterContext } from "lib/types";
 import { TileCache } from "lib/util";
-import { epsg4326ToEpsg3857Presets } from "lib/presets";
+import trondheim from "test/assets/trondheim.json";
+import { createTestCanvasImage, getMaptilerEpsg4326Url, getTestHTMLImageElement } from "test/util";
 import { loadTile } from "../base";
 
 vi.mock("lib/util/dom");

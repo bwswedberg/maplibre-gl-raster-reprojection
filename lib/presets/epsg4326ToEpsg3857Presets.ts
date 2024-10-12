@@ -1,3 +1,10 @@
+import {
+  metersToPixels,
+  metersToLngLat,
+  pixelsToMeters,
+  pixelsToScreenPixels,
+  screenPixelsToPixels
+} from "lib/proj/epsg3857";
 import * as tilebelt from "lib/proj/tilebelt-wgs84";
 import type {
   Bbox,
@@ -8,13 +15,6 @@ import type {
   SourceToPixelFn,
   Tile
 } from "lib/types";
-import {
-  metersToPixels,
-  metersToLngLat,
-  pixelsToMeters,
-  pixelsToScreenPixels,
-  screenPixelsToPixels
-} from "lib/proj/epsg3857";
 
 interface PresetOptions {
   zoomOffset: number;

@@ -1,7 +1,7 @@
 import { resolve } from "node:path";
 import { defineConfig } from "vite";
-import tsconfigPaths from "vite-tsconfig-paths";
 import dts from "vite-plugin-dts";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
   base: "./",
@@ -27,6 +27,10 @@ export default defineConfig({
     globals: true,
     environment: "happy-dom",
     setupFiles: ["./test/setup.ts"],
-    testTimeout: 30000
+    testTimeout: 30000,
+    coverage: {
+      include: ['lib'],
+      exclude: ['**/__tests__', '**/__mocks__', '**/types.ts', '**/*.d.ts']
+    }
   }
 });

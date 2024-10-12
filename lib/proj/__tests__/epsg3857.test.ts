@@ -101,7 +101,7 @@ describe("getResolution", () => {
     ["zoom 0", 0, 256, initialResolution],
     ["zoom 7", 7, 256, 1222.99245256282],
     ["zoom 0 different tile size", 0, 512, initialResolution / 2]
-  ])("should return correct meters/pixel - %s", (label, zoom, tileSize, res) => {
+  ])("should return correct meters/pixel - %s", (_label, zoom, tileSize, res) => {
     const output = epsg3857.getResolution(zoom, tileSize);
     expect(output).toBe(res);
   });
@@ -114,7 +114,7 @@ describe("lngLatToMeters", () => {
     ["ne", ne.lngLat, ne.meters],
     ["sw", sw.lngLat, sw.meters],
     ["se", se.lngLat, se.meters]
-  ])("should return correct meters - %s", (label, lngLat, meters) => {
+  ])("should return correct meters - %s", (_label, lngLat, meters) => {
     const output = epsg3857.lngLatToMeters(lngLat);
     expect(output).toStrictEqual([expect.closeTo(meters[0], 7), expect.closeTo(meters[1], 7)]);
   });
@@ -127,7 +127,7 @@ describe("metersToLngLat", () => {
     ["ne", ne.meters, ne.lngLat],
     ["sw", sw.meters, sw.lngLat],
     ["se", se.meters, se.lngLat]
-  ])("should return correct decimal degrees - %s", (label, meters, lngLat) => {
+  ])("should return correct decimal degrees - %s", (_label, meters, lngLat) => {
     const output = epsg3857.metersToLngLat(meters);
     expect(output).toStrictEqual([expect.closeTo(lngLat[0], 7), expect.closeTo(lngLat[1], 7)]);
   });
@@ -140,7 +140,7 @@ describe("metersToPixels", () => {
     ["ne", ne.meters, ne.z7.zoom, ne.z7.tileSize, ne.z7.pixels],
     ["sw", sw.meters, sw.z7.zoom, sw.z7.tileSize, sw.z7.pixels],
     ["se", se.meters, se.z7.zoom, se.z7.tileSize, se.z7.pixels]
-  ])("should return correct pixels - %s", (label, meters, zoom, tileSize, pixels) => {
+  ])("should return correct pixels - %s", (_label, meters, zoom, tileSize, pixels) => {
     const output = epsg3857.metersToPixels(meters, zoom, tileSize);
     expect(output).toStrictEqual([expect.closeTo(pixels[0], 7), expect.closeTo(pixels[1], 7)]);
   });
@@ -153,7 +153,7 @@ describe("pixelsToMeters", () => {
     ["ne", ne.z7.pixels, ne.z7.zoom, ne.z7.tileSize, ne.meters],
     ["sw", sw.z7.pixels, sw.z7.zoom, sw.z7.tileSize, sw.meters],
     ["se", se.z7.pixels, se.z7.zoom, se.z7.tileSize, se.meters]
-  ])("should return correct meters - %s", (label, pixels, zoom, tileSize, meters) => {
+  ])("should return correct meters - %s", (_label, pixels, zoom, tileSize, meters) => {
     const output = epsg3857.pixelsToMeters(pixels, zoom, tileSize);
     expect(output).toStrictEqual([expect.closeTo(meters[0], 7), expect.closeTo(meters[1], 7)]);
   });
@@ -166,7 +166,7 @@ describe("pixelsToTile", () => {
     ["ne", ne.z7.pixels, ne.z7.zoom, ne.z7.tileSize, ne.z7.tileTms],
     ["sw", sw.z7.pixels, sw.z7.zoom, sw.z7.tileSize, sw.z7.tileTms],
     ["se", se.z7.pixels, se.z7.zoom, se.z7.tileSize, se.z7.tileTms]
-  ])("should return correct tile - %s", (label, pixels, zoom, tileSize, tile) => {
+  ])("should return correct tile - %s", (_label, pixels, zoom, tileSize, tile) => {
     const output = epsg3857.pixelsToTile(pixels, zoom, tileSize);
     expect(output).toStrictEqual(tile);
   });
@@ -181,7 +181,7 @@ describe("pixelsToScreenPixels", () => {
     ["se", se.z7.pixels, se.z7.zoom, se.z7.tileSize, se.z7.screen]
   ])(
     "should return correct screen pixels (origin top left) - %s",
-    (label, pixels, zoom, tileSize, screen) => {
+    (_label, pixels, zoom, tileSize, screen) => {
       const output = epsg3857.pixelsToScreenPixels(pixels, zoom, tileSize);
       expect(output).toStrictEqual([expect.closeTo(screen[0], 7), expect.closeTo(screen[1], 7)]);
     }
@@ -197,7 +197,7 @@ describe("screenPixelsToPixels", () => {
     ["se", se.z7.screen, se.z7.zoom, se.z7.tileSize, se.z7.pixels]
   ])(
     "should return correct pixels (origin bottom left) - %s",
-    (label, screen, zoom, tileSize, pixels) => {
+    (_label, screen, zoom, tileSize, pixels) => {
       const output = epsg3857.screenPixelsToPixels(screen, zoom, tileSize);
       expect(output).toStrictEqual([expect.closeTo(pixels[0], 7), expect.closeTo(pixels[1], 7)]);
     }
@@ -211,7 +211,7 @@ describe("lngLatToTile", () => {
     ["ne", ne.lngLat, ne.z7.zoom, ne.z7.tileSize, ne.z7.tileTms],
     ["sw", sw.lngLat, sw.z7.zoom, sw.z7.tileSize, sw.z7.tileTms],
     ["se", se.lngLat, se.z7.zoom, se.z7.tileSize, se.z7.tileTms]
-  ])("should return correct tile - %s", (label, lngLat, zoom, tileSize, tile) => {
+  ])("should return correct tile - %s", (_label, lngLat, zoom, tileSize, tile) => {
     const output = epsg3857.lngLatToTile(lngLat, zoom, tileSize);
     expect(output).toStrictEqual(tile);
   });
@@ -224,7 +224,7 @@ describe("metersToTile", () => {
     ["ne", ne.meters, ne.z7.zoom, ne.z7.tileSize, ne.z7.tileTms],
     ["sw", sw.meters, sw.z7.zoom, sw.z7.tileSize, sw.z7.tileTms],
     ["se", se.meters, se.z7.zoom, se.z7.tileSize, se.z7.tileTms]
-  ])("should return correct tile - %s", (label, meters, zoom, tileSize, tile) => {
+  ])("should return correct tile - %s", (_label, meters, zoom, tileSize, tile) => {
     const output = epsg3857.metersToTile(meters, zoom, tileSize);
     expect(output).toStrictEqual(tile);
   });
@@ -237,7 +237,7 @@ describe("tileBbox", () => {
     ["ne", ne.z7.tileTms, ne.z7.tileSize, ne.z7.tileBBox],
     ["sw", sw.z7.tileTms, sw.z7.tileSize, sw.z7.tileBBox],
     ["se", se.z7.tileTms, se.z7.tileSize, se.z7.tileBBox]
-  ])("should return correct tile bbox in meters - %s", (label, tile, tileSize, bbox) => {
+  ])("should return correct tile bbox in meters - %s", (_label, tile, tileSize, bbox) => {
     const output = epsg3857.tileBbox(tile, tileSize);
     expect(output).toStrictEqual(bbox);
   });
@@ -250,7 +250,7 @@ describe("tmsToXyz", () => {
     ["ne", ne.z7.tileTms, ne.z7.tileXyz],
     ["sw", sw.z7.tileTms, sw.z7.tileXyz],
     ["se", se.z7.tileTms, se.z7.tileXyz]
-  ])("should return correct xyz tile - %s", (label, tile, tileXyz) => {
+  ])("should return correct xyz tile - %s", (_label, tile, tileXyz) => {
     const output = epsg3857.tmsToXyz(tile);
     expect(output).toStrictEqual(tileXyz);
   });
@@ -263,7 +263,7 @@ describe("xyzToTms", () => {
     ["ne", ne.z7.tileXyz, ne.z7.tileTms],
     ["sw", sw.z7.tileXyz, sw.z7.tileTms],
     ["se", se.z7.tileXyz, se.z7.tileTms]
-  ])("should return correct tms tile - %s", (label, tileXyz, tile) => {
+  ])("should return correct tms tile - %s", (_label, tileXyz, tile) => {
     const output = epsg3857.xyzToTms(tileXyz);
     expect(output).toStrictEqual(tile);
   });
@@ -280,7 +280,7 @@ describe("tileToQuadkey", () => {
     ["ne", ne.z7.tileTms, ne.z7.quadkey],
     ["sw", sw.z7.tileTms, sw.z7.quadkey],
     ["se", se.z7.tileTms, se.z7.quadkey]
-  ])("should return correct quadkey - %s", (label, tile, quadkey) => {
+  ])("should return correct quadkey - %s", (_label, tile, quadkey) => {
     const output = epsg3857.tileToQuadkey(tile);
     expect(output).toStrictEqual(quadkey);
   });
@@ -297,7 +297,7 @@ describe("quadkeyToTile", () => {
     ["ne", ne.z7.quadkey, ne.z7.tileTms],
     ["sw", sw.z7.quadkey, sw.z7.tileTms],
     ["se", se.z7.quadkey, se.z7.tileTms]
-  ])("should return correct tile - %s", (label, quadkey, tile) => {
+  ])("should return correct tile - %s", (_label, quadkey, tile) => {
     const output = epsg3857.quadkeyToTile(quadkey);
     expect(output).toStrictEqual(tile);
   });

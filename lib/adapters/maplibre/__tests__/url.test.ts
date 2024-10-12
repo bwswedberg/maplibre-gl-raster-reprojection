@@ -60,7 +60,7 @@ describe("parseCustomProtocolUrl", () => {
         destinationTileSize: 256
       }
     ]
-  ])("should parse custom protocol request url - %s", (label, url, parsedReqUrl) => {
+  ])("should parse custom protocol request url - %s", (_label, url, parsedReqUrl) => {
     const output = parseCustomProtocolRequestUrl(url);
     expect(output).toStrictEqual(parsedReqUrl);
   });
@@ -82,7 +82,7 @@ describe("getImageUrl", () => {
       "https://tilehost.com/tiles?xmin={sxmin}&ymin={symin}&xmax={sxmax}&ymax={symax}",
       "https://tilehost.com/tiles?xmin=10&ymin=20&xmax=30&ymax=40"
     ]
-  ])("should return valid image url - %s", (label, urlTemplate, imageUrl) => {
+  ])("should return valid image url - %s", (_label, urlTemplate, imageUrl) => {
     const output = getImageUrl(urlTemplate, tile, bbox);
     expect(output).toBe(imageUrl);
   });

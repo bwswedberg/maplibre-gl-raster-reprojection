@@ -94,7 +94,7 @@ test("should handle errors when fetching tile", async () => {
   const cache = new TileCache<string | null>({
     maxCache: 2,
     fetchTile: () => {
-      return new Promise((resolve, reject) => {
+      return new Promise((_resolve, reject) => {
         setTimeout(() => {
           reject(new Error(errorMessage));
         }, 1000);

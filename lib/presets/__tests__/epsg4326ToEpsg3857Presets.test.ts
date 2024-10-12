@@ -86,11 +86,11 @@ const se = {
   }
 };
 
-type DestinationTileToSourceTilesTestCase = {
+interface DestinationTileToSourceTilesTestCase {
   options?: Epsg4326ToEpsg3857PresetOptions;
   destinationTile: { tile: number[]; bbox: number[] };
   sourceTiles: { tile: number[]; bbox: number[] }[];
-};
+}
 
 describe("destinationTileToSourceTiles", () => {
   const cases: DestinationTileToSourceTilesTestCase[] = [
@@ -159,11 +159,14 @@ describe("destinationTileToSourceTiles", () => {
       d.options,
       d.sourceTiles
     ])
-  )("should return correct epsg4326 tiles - %s", (label, destinationTile, options, sourceTiles) => {
-    const presets = epsg4326ToEpsg3857Presets(options);
-    const output = presets.destinationTileToSourceTiles(destinationTile);
-    expect(output).toStrictEqual(sourceTiles);
-  });
+  )(
+    "should return correct epsg4326 tiles - %s",
+    (_label, destinationTile, options, sourceTiles) => {
+      const presets = epsg4326ToEpsg3857Presets(options);
+      const output = presets.destinationTileToSourceTiles(destinationTile);
+      expect(output).toStrictEqual(sourceTiles);
+    }
+  );
 });
 
 describe("destinationToPixel", () => {
@@ -193,7 +196,7 @@ describe("destinationToPixel", () => {
     ["ne", ne.meters, ne.case0.zoom, ne.case0.tileSize, ne.case0.destinationPixels],
     ["sw", sw.meters, sw.case0.zoom, sw.case0.tileSize, sw.case0.destinationPixels],
     ["se", se.meters, se.case0.zoom, se.case0.tileSize, se.case0.destinationPixels]
-  ])("should convert meters to screen pixels - %s", (label, meters, zoom, tileSize, pixels) => {
+  ])("should convert meters to screen pixels - %s", (_label, meters, zoom, tileSize, pixels) => {
     const presets = epsg4326ToEpsg3857Presets();
     const output = presets.destinationToPixel(meters, zoom, tileSize);
     expect(output).toStrictEqual([expect.closeTo(pixels[0], 7), expect.closeTo(pixels[1], 7)]);
@@ -207,7 +210,7 @@ describe("destinationToSource", () => {
     ["ne", ne.meters, ne.lngLat],
     ["sw", sw.meters, sw.lngLat],
     ["se", se.meters, se.lngLat]
-  ])("should convert meters to lngLat - %s", (label, meters, lngLat) => {
+  ])("should convert meters to lngLat - %s", (_label, meters, lngLat) => {
     const presets = epsg4326ToEpsg3857Presets();
     const output = presets.destinationToSource(meters);
     expect(output).toStrictEqual([expect.closeTo(lngLat[0], 7), expect.closeTo(lngLat[1], 7)]);
@@ -241,7 +244,7 @@ describe("pixelToDestination", () => {
     ["ne", ne.case0.destinationPixels, ne.case0.zoom, ne.case0.tileSize, ne.meters],
     ["sw", sw.case0.destinationPixels, sw.case0.zoom, sw.case0.tileSize, sw.meters],
     ["se", se.case0.destinationPixels, se.case0.zoom, se.case0.tileSize, se.meters]
-  ])("should convert screen pixels to meters - %s", (label, pixels, zoom, tileSize, meters) => {
+  ])("should convert screen pixels to meters - %s", (_label, pixels, zoom, tileSize, meters) => {
     const presets = epsg4326ToEpsg3857Presets();
     const output = presets.pixelToDestination(pixels, zoom, tileSize);
     expect(output).toStrictEqual([expect.closeTo(meters[0], 7), expect.closeTo(meters[1], 7)]);
@@ -269,7 +272,7 @@ describe("sourceToPixel", () => {
     ["ne", ne.lngLat, ne.case0.zoom, ne.case0.tileSize, ne.case0.sourcePixels],
     ["sw", sw.lngLat, sw.case0.zoom, sw.case0.tileSize, sw.case0.sourcePixels],
     ["se", se.lngLat, se.case0.zoom, se.case0.tileSize, se.case0.sourcePixels]
-  ])("should convert lngLat to screen pixels - %s", (label, lngLat, zoom, tileSize, pixels) => {
+  ])("should convert lngLat to screen pixels - %s", (_label, lngLat, zoom, tileSize, pixels) => {
     const presets = epsg4326ToEpsg3857Presets();
     const output = presets.sourceToPixel(lngLat, zoom, tileSize);
     expect(output).toStrictEqual([expect.closeTo(pixels[0], 7), expect.closeTo(pixels[1], 7)]);

@@ -24,15 +24,9 @@ export const canvasToArrayBuffer = async (
 };
 
 export const fetchImage = async (url: string): Promise<HTMLImageElement> => {
-  return new Promise<HTMLImageElement>(async (resolve, reject) => {
-    try {
-      const image = new Image();
-      image.crossOrigin = "";
-      image.src = url;
-      await image.decode();
-      resolve(image);
-    } catch (error) {
-      reject(error);
-    }
-  });
+  const image = new Image();
+  image.crossOrigin = "";
+  image.src = url;
+  await image.decode();
+  return image;
 };

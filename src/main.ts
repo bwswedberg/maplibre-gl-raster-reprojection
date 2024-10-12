@@ -91,6 +91,6 @@ function handleLayerCheckboxChange(event: any) {
 
 const checkboxes = document.getElementsByClassName("layerCheckbox");
 
-for (let i = 0; i < checkboxes.length; i++) {
-  checkboxes[i].addEventListener("change", handleLayerCheckboxChange);
+for (const checkbox of checkboxes) {
+  checkbox.addEventListener("change", handleLayerCheckboxChange);
 }

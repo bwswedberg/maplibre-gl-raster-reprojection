@@ -32,7 +32,7 @@ export interface MapTileAdapterOptions {
   tileSize?: number;
 }
 
-export type MapTileAdapterContext = {
+export interface MapTileAdapterContext {
   cache: TileCache<HTMLImageElement | null>;
   destinationTileSize: number;
   destinationTileToSourceTiles: DestinationTileToSourceTilesFn;

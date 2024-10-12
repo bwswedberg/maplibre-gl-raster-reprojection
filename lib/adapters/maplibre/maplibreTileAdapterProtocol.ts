@@ -9,7 +9,7 @@ const MTA_PROTOCOL = "mta";
 const loader = async (
   ctx: MapTileAdapterContext,
   reqParams: RequestParameters,
-  _abortController: AbortController
+  abortController: AbortController
 ): Promise<GetResourceResponse<any>> => {
   const request = parseCustomProtocolRequestUrl(reqParams.url);
   const _ctx: MapTileAdapterContext = {
@@ -29,13 +29,16 @@ const loader = async (
       url: getImageUrl(request.urlTemplate, d.tile, d.bbox)
     }));
 
-  let isCanceled = false;
-
   const destination = await loadTile({
     ctx: _ctx,
     sourceRequests,
     destinationRequest: { tile: request.tile, bbox: request.bbox },
-    checkCanceled: () => isCanceled
+    checkCanceled: () => {
+      if (abortController.signal.aborted) {
+        console.log('abortController.signal', 'true');
+      }
+      return abortController.signal.aborted
+    }
   });
   if (!destination) return { data: null };
   const img = await canvasToArrayBuffer(destination.canvas);
