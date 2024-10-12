@@ -1,11 +1,21 @@
-import type { MapTileAdapterContext, MapTileAdapterOptions } from "lib/types";
+import type { DestinationTileToSourceTilesFn, DestinationToPixelFn, DestinationToSourceFn, MapTileAdapterContext, PixelToDestinationFn, SourceToPixelFn } from "lib/types";
 import { fetchImage, TileCache } from "lib/util";
 import { loader } from "./loader";
 
 const MTA_PROTOCOL = "mta";
 
-interface MaplibreTileAdapterOptions extends MapTileAdapterOptions {
+export interface MaplibreTileAdapterOptions {
   protocol?: string;
+  cacheSize?: number;
+  destinationTileSize?: number;
+  destinationTileToSourceTiles: DestinationTileToSourceTilesFn;
+  destinationToPixel: DestinationToPixelFn;
+  destinationToSource: DestinationToSourceFn;
+  interval?: number[];
+  pixelToDestination: PixelToDestinationFn;
+  sourceTileSize?: number;
+  sourceToPixel: SourceToPixelFn;
+  tileSize?: number;
 }
 
 export const maplibreTileAdapterProtocol = (options: MaplibreTileAdapterOptions) => {

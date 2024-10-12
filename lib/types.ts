@@ -1,4 +1,4 @@
-import { TileCache } from "./util/cache";
+import type { TileCache } from "./util/cache";
 
 /**
  * [x, y, z]
@@ -18,19 +18,6 @@ export type DestinationTileToSourceTilesFn = (props: {
   tile: Tile;
   bbox: Bbox;
 }) => { tile: Tile; bbox: Bbox }[];
-
-export interface MapTileAdapterOptions {
-  cacheSize?: number;
-  destinationTileSize?: number;
-  destinationTileToSourceTiles: DestinationTileToSourceTilesFn;
-  destinationToPixel: DestinationToPixelFn;
-  destinationToSource: DestinationToSourceFn;
-  interval?: number[];
-  pixelToDestination: PixelToDestinationFn;
-  sourceTileSize?: number;
-  sourceToPixel: SourceToPixelFn;
-  tileSize?: number;
-}
 
 export interface MapTileAdapterContext {
   cache: TileCache<HTMLImageElement | null>;
