@@ -35,9 +35,9 @@ const loader = async (
     destinationRequest: { tile: request.tile, bbox: request.bbox },
     checkCanceled: () => {
       if (abortController.signal.aborted) {
-        console.log('abortController.signal', 'true');
+        console.log("abortController.signal", "true");
       }
-      return abortController.signal.aborted
+      return abortController.signal.aborted;
     }
   });
   if (!destination) return { data: null };

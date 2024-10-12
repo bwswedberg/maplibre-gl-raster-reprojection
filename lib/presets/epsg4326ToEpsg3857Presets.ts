@@ -1,3 +1,4 @@
+import * as tilebelt from "tilebelt-wgs84";
 import {
   metersToPixels,
   metersToLngLat,
@@ -5,7 +6,6 @@ import {
   pixelsToScreenPixels,
   screenPixelsToPixels
 } from "lib/proj/epsg3857";
-import * as tilebelt from "lib/proj/tilebelt-wgs84";
 import type {
   Bbox,
   DestinationTileToSourceTilesFn,

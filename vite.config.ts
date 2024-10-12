@@ -11,7 +11,8 @@ export default defineConfig({
     tsconfigPaths(),
     dts({
       include: "lib",
-      exclude: ["**/__tests__", "**/__mocks__"]
+      exclude: ["**/__tests__", "**/__mocks__"],
+      insertTypesEntry: true
     })
   ],
   build: {
@@ -29,8 +30,8 @@ export default defineConfig({
     setupFiles: ["./test/setup.ts"],
     testTimeout: 30000,
     coverage: {
-      include: ['lib'],
-      exclude: ['**/__tests__', '**/__mocks__', '**/types.ts', '**/*.d.ts']
+      include: ["lib"],
+      exclude: ["**/__tests__", "**/__mocks__", "**/types.ts", "**/*.d.ts"]
     }
   }
 });

@@ -42,4 +42,4 @@ export interface MapTileAdapterContext {
   pixelToDestination: PixelToDestinationFn;
   sourceTileSize: number;
   sourceToPixel: SourceToPixelFn;
-};
+}
