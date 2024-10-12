@@ -1,4 +1,4 @@
-name: 🏭 CI
+name: CI
 
 on:
   push:
@@ -12,94 +12,94 @@ concurrency:
 
 jobs:
   lint:
-    name: ⬣ ESLint
+    name: ESLint
     runs-on: ubuntu-latest
     steps:
-      - name: ⬇️ Checkout repo
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: ⎔ Setup node
+      - name: Setup node
         uses: actions/setup-node@v4
         with:
           cache: npm
           cache-dependency-path: ./package.json
           node-version: 20
 
-      - name: 📥 Install deps
+      - name: Install deps
         run: npm install
 
-      - name: 🔬 Lint
+      - name: Lint
         run: npm run lint:ci
 
   typecheck:
-    name: ʦ TypeScript
+    name: TypeScript
     runs-on: ubuntu-latest
     steps:
-      - name: ⬇️ Checkout repo
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: ⎔ Setup node
+      - name: Setup node
         uses: actions/setup-node@v4
         with:
           cache: npm
           cache-dependency-path: ./package.json
           node-version: 20
 
-      - name: 📥 Install deps
+      - name: Install deps
         run: npm install
 
-      - name: 🔎 Type check
+      - name: Type check
         run: npm run typecheck --if-present
 
   test:
-    name: ⚡ Vitest
+    name: Vitest
     runs-on: ubuntu-latest
     steps:
-      - name: ⬇️ Checkout repo
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: ⎔ Setup node
+      - name: Setup node
         uses: actions/setup-node@v4
         with:
           cache: npm
           cache-dependency-path: ./package.json
           node-version: 20
 
-      - name: 📥 Install deps
+      - name: Install deps
         run: npm install
 
-      - name: ⚡ Run vitest
+      - name: Run vitest
         run: npm run test:ci
 
-      - name: ⬆️ Upload results to Codecov
+      - name: Upload results to codecov
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
   e2e:
-    name: 🎭 Playwright
+    name: Playwright
     runs-on: ubuntu-latest
     steps:
-      - name: ⬇️ Checkout repo
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: ⎔ Setup node
+      - name: Setup node
         uses: actions/setup-node@v4
         with:
           cache: npm
           cache-dependency-path: ./package.json
           node-version: 20
 
-      - name: 📥 Install deps
+      - name: Install deps
         run: npm install
 
-      - name: 🛠 Setup e2e
+      - name: Setup e2e
         run: npm run e2e:install
 
-      - name: ⚙️ Build
+      - name: Build
         run: npm run build
 
-      - name: 🎭 Playwright tests
+      - name: Run playwright
         run: npm run e2e:ci
 
       - uses: actions/upload-artifact@v4
