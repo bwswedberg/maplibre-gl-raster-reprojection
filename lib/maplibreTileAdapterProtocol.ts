@@ -1,8 +1,8 @@
 import type { GetResourceResponse, RequestParameters } from "maplibre-gl";
 import type { MapTileAdapterContext, MapTileAdapterOptions } from "lib/types";
 import { canvasToArrayBuffer, fetchImage, TileCache } from "lib/util";
-import { loadTile } from "../base";
-import { parseCustomProtocolRequestUrl, getImageUrl } from "./url";
+import { loadTile } from "./loadTile";
+import { parseCustomProtocolRequestUrl, getImageUrl } from "./util/url";
 
 const MTA_PROTOCOL = "mta";
 
@@ -33,12 +33,7 @@ const loader = async (
     ctx: _ctx,
     sourceRequests,
     destinationRequest: { tile: request.tile, bbox: request.bbox },
-    checkCanceled: () => {
-      if (abortController.signal.aborted) {
-        console.log("abortController.signal", "true");
-      }
-      return abortController.signal.aborted;
-    }
+    checkCanceled: () => abortController.signal.aborted
   });
   if (!destination) return { data: null };
   const img = await canvasToArrayBuffer(destination.canvas);

@@ -4,7 +4,7 @@ import { Tile, Bbox, MapTileAdapterContext } from "lib/types";
 import { TileCache } from "lib/util";
 import trondheim from "test/assets/trondheim.json";
 import { createTestCanvasImage, getMaptilerEpsg4326Url, getTestHTMLImageElement } from "test/util";
-import { loadTile } from "../base";
+import { loadTile } from "../loadTile";
 
 vi.mock("lib/util/dom");
 

@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import maplibregl from "maplibre-gl";
 import { epsg4326ToEpsg3857Presets } from "lib/presets";
-import { maplibreTileAdapterProtocol } from "../maplibreTileAdapterProtocol";
+import { maplibreTileAdapterProtocol } from "../../../maplibreTileAdapterProtocol";
 
 declare global {
   interface Window {
