@@ -3,7 +3,7 @@ import {
   getImageUrl,
   parseCustomProtocolRequestUrl,
   ParseCustomProtocolRequestUrlOutput
-} from "../url";
+} from "../../loader/url";
 
 describe("parseCustomProtocolUrl", () => {
   const tile: Tile = [1, 2, 3]; // [x, y, z];
