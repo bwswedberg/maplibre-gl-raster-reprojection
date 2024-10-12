@@ -48,7 +48,9 @@ test.describe("maplibreTileAdapterProtocol", () => {
           layers: [{ id: "epsg4326layer", source: "epsg4326source", type: "raster" }]
         },
         center: [0, 45],
-        zoom: 2
+        zoom: 2,
+        // Remove attribution because it causes differences with e2e snapshots
+        attributionControl: false
       });
 
       // Wait on load event and add indicator to know when it's ready
