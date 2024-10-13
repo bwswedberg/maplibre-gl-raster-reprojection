@@ -1,10 +1,17 @@
-import type { DestinationTileToSourceTilesFn, DestinationToPixelFn, DestinationToSourceFn, MapTileAdapterContext, PixelToDestinationFn, SourceToPixelFn } from "lib/types";
+import type {
+  DestinationTileToSourceTilesFn,
+  DestinationToPixelFn,
+  DestinationToSourceFn,
+  ProtocolContext,
+  PixelToDestinationFn,
+  SourceToPixelFn
+} from "lib/types";
 import { fetchImage, TileCache } from "lib/util";
 import { loader } from "./loader";
 
-const MTA_PROTOCOL = "mta";
+const PROTOCOL_NAME = "reproject";
 
-export interface MaplibreTileAdapterOptions {
+export interface CreateProtocolOptions {
   protocol?: string;
   cacheSize?: number;
   destinationTileSize?: number;
@@ -16,15 +23,16 @@ export interface MaplibreTileAdapterOptions {
   sourceTileSize?: number;
   sourceToPixel: SourceToPixelFn;
   tileSize?: number;
+  zoomOffset?: number;
 }
 
-export const maplibreTileAdapterProtocol = (options: MaplibreTileAdapterOptions) => {
+export const createProtocol = (options: CreateProtocolOptions) => {
   const cache = new TileCache<HTMLImageElement | null>({
     fetchTile: (url) => fetchImage(url),
     maxCache: options.cacheSize ?? 10
   });
   const destinationTileSize = options?.destinationTileSize ?? options?.tileSize ?? 256;
-  const ctx: MapTileAdapterContext = {
+  const ctx: ProtocolContext = {
     cache,
     destinationTileSize,
     destinationTileToSourceTiles: options.destinationTileToSourceTiles,
@@ -33,11 +41,12 @@ export const maplibreTileAdapterProtocol = (options: MaplibreTileAdapterOptions)
     interval: options?.interval ?? [destinationTileSize, destinationTileSize],
     pixelToDestination: options.pixelToDestination,
     sourceTileSize: options?.sourceTileSize ?? destinationTileSize,
-    sourceToPixel: options.sourceToPixel
+    sourceToPixel: options.sourceToPixel,
+    zoomOffset: options.zoomOffset
   };
   return {
-    protocol: `${options?.protocol ?? MTA_PROTOCOL}`,
-    tileUrlPrefix: `${options?.protocol ?? MTA_PROTOCOL}://bbox={bbox-epsg-3857}&z={z}&x={x}&y={y}`,
+    protocol: `${options?.protocol ?? PROTOCOL_NAME}`,
+    tileUrlPrefix: `${options?.protocol ?? PROTOCOL_NAME}://bbox={bbox-epsg-3857}&z={z}&x={x}&y={y}`,
     loader: loader.bind(null, ctx)
   };
 };

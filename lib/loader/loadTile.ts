@@ -1,8 +1,8 @@
 import { drawTile } from "lib/draw";
-import type { Bbox, MapTileAdapterContext, Tile } from "lib/types";
+import type { Bbox, ProtocolContext, Tile } from "lib/types";
 
 interface Props {
-  ctx: MapTileAdapterContext;
+  ctx: ProtocolContext;
   destinationRequest: { tile: Tile; bbox: Bbox };
   sourceRequests: { tile: Tile; bbox: Bbox; url: string }[];
   checkCanceled: () => boolean;

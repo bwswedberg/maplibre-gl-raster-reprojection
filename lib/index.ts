@@ -1,2 +1,2 @@
-export * from "./maplibreTileAdapterProtocol";
+export * from "./createProtocol";
 export * from "./presets";

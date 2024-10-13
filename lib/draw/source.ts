@@ -1,8 +1,8 @@
-import type { Bbox, MapTileAdapterContext, Tile } from "lib/types";
+import type { Bbox, ProtocolContext, Tile } from "lib/types";
 import { createCanvasContext } from "lib/util/dom";
 
 export const drawSource = (
-  ctx: MapTileAdapterContext,
+  ctx: ProtocolContext,
   sources: { tile: Tile; image: HTMLImageElement | null; bbox: Bbox }[]
 ) => {
   const zoom = sources[0].tile[2];

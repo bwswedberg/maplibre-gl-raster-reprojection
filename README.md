@@ -29,13 +29,13 @@ npm install maplibre-gl-raster-reprojection
 
 ```ts
 import maplibregl from 'maplibre-gl';
-import { maplibreRasterReprojectionProtocol, epsg4326ToEpsg3857Presets } from 'maplibre-gl-raster-reprojection';
+import { createProtocol, epsg4326ToEpsg3857Presets } from 'maplibre-gl-raster-reprojection';
 
-const { protocol, loader } = maplibreRasterReprojectionProtocol({
-  // Converts EPSG:4326 tile endpoint to EPSG:3857
-  ...epsg4326ToEpsg3857Presets(),
+const { protocol, loader } = createProtocol({
   // Draw EPSG:3857 tile in 256 pixel width by 1 pixel height intervals (more accurate latitude)
-  interval: [256, 1]
+  interval: [256, 1],
+  // Converts EPSG:4326 tile endpoint to EPSG:3857
+  ...epsg4326ToEpsg3857Presets,
 });
 
 maplibregl.addProtocol(protocol, loader);
@@ -47,7 +47,7 @@ const map = new maplibregl.Map({
       version: 8,
       epsg4326Source: {
         type: 'raster',
-        tiles: ['reproj://bbox={bbox-epsg-3857}&z={z}&x={x}&y={y}://https://api.tilehost.com/map/{sz}/{sx}/{sy}.png'],
+        tiles: ['reproject://bbox={bbox-epsg-3857}&z={z}&x={x}&y={y}://https://api.tilehost.com/map/{sz}/{sx}/{sy}.png'],
         tileSize: 256,
         scheme: 'xyz'
       }

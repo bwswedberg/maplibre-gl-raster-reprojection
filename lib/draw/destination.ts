@@ -1,8 +1,8 @@
-import type { Bbox, MapTileAdapterContext, Tile } from "lib/types";
+import type { Bbox, ProtocolContext, Tile } from "lib/types";
 import { createCanvasContext } from "lib/util/dom";
 
 export const drawDestination = (
-  ctx: MapTileAdapterContext,
+  ctx: ProtocolContext,
   source: { canvas: HTMLCanvasElement; translate: number[]; zoom: number },
   destination: { tile: Tile; bbox: Bbox }
 ) => {

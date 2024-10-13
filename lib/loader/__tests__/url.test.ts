@@ -21,7 +21,8 @@ describe("parseCustomProtocolUrl", () => {
         urlTemplate,
         interval: undefined,
         sourceTileSize: undefined,
-        destinationTileSize: undefined
+        destinationTileSize: undefined,
+        zoomOffset: undefined
       }
     ],
     [
@@ -33,7 +34,8 @@ describe("parseCustomProtocolUrl", () => {
         urlTemplate,
         interval: [256, 1],
         sourceTileSize: undefined,
-        destinationTileSize: undefined
+        destinationTileSize: undefined,
+        zoomOffset: undefined
       }
     ],
     [
@@ -45,7 +47,8 @@ describe("parseCustomProtocolUrl", () => {
         urlTemplate,
         interval: undefined,
         sourceTileSize: 512,
-        destinationTileSize: 512
+        destinationTileSize: 512,
+        zoomOffset: undefined
       }
     ],
     [
@@ -57,7 +60,21 @@ describe("parseCustomProtocolUrl", () => {
         urlTemplate,
         interval: undefined,
         sourceTileSize: 512,
-        destinationTileSize: 256
+        destinationTileSize: 256,
+        zoomOffset: undefined
+      }
+    ],
+    [
+      "zoomOffset",
+      `mta://bbox=10,20,30,40&x=1&y=2&z=3&zoffset=-2://${urlTemplate}`,
+      {
+        tile,
+        bbox,
+        urlTemplate,
+        interval: undefined,
+        sourceTileSize: undefined,
+        destinationTileSize: undefined,
+        zoomOffset: -2
       }
     ]
   ])("should parse custom protocol request url - %s", (_label, url, parsedReqUrl) => {

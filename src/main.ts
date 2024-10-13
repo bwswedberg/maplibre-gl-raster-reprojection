@@ -1,6 +1,6 @@
 import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl from "maplibre-gl";
-import { maplibreTileAdapterProtocol, epsg4326ToEpsg3857Presets } from "../lib";
+import { createProtocol, epsg4326ToEpsg3857Presets } from "../lib";
 import "./style.css";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
@@ -17,10 +17,10 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   </div>
 `;
 
-const { protocol, loader } = maplibreTileAdapterProtocol({
+const { protocol, loader } = createProtocol({
   tileSize: 256,
   interval: [256, 1],
-  ...epsg4326ToEpsg3857Presets()
+  ...epsg4326ToEpsg3857Presets
 });
 
 maplibregl.addProtocol(protocol, loader);
@@ -39,7 +39,7 @@ const map = new maplibregl.Map({
       basic4326: {
         type: "raster",
         tiles: [
-          `mta://bbox={bbox-epsg-3857}&z={z}&x={x}&y={y}://https://api.maptiler.com/maps/basic-4326/256/{sz}/{sx}/{sy}.png?key=${import.meta.env.VITE_MAPTILER_API_KEY}`
+          `reproject://bbox={bbox-epsg-3857}&z={z}&x={x}&y={y}://https://api.maptiler.com/maps/basic-4326/256/{sz}/{sx}/{sy}.png?key=${import.meta.env.VITE_MAPTILER_API_KEY}`
         ],
         tileSize: 256,
         scheme: "xyz"
@@ -47,7 +47,7 @@ const map = new maplibregl.Map({
       local4326: {
         type: "raster",
         tiles: [
-          "mta://bbox={bbox-epsg-3857}&z={z}&x={x}&y={y}://http://localhost:5173/maptiler-epsg4326/{sz}/{sx}/{sy}.png"
+          "reproject://bbox={bbox-epsg-3857}&z={z}&x={x}&y={y}://http://localhost:5173/maptiler-epsg4326/{sz}/{sx}/{sy}.png"
         ],
         tileSize: 256,
         minzoom: 1,

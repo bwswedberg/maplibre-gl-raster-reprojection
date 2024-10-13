@@ -16,10 +16,6 @@ import {
   screenPixelsToPixels
 } from "./epsg3857";
 
-interface PresetOptions {
-  zoomOffset: number;
-}
-
 const destinationToPixel: DestinationToPixelFn = (xy, zoom, tileSize) => {
   const p = metersToPixels(xy, zoom, tileSize);
   return pixelsToScreenPixels(p, zoom, tileSize);
@@ -42,45 +38,26 @@ const sourceToPixel: SourceToPixelFn = (lngLat, zoom, tileSize) => {
   ];
 };
 
-const destinationTileToSourceTiles = (
-  destinationRequest: { tile: Tile; bbox: Bbox },
-  options: PresetOptions
+const destinationTileToSourceTiles: DestinationTileToSourceTilesFn = (
+  destinationRequest,
+  zoomOffset
 ) => {
   const lngLatBbox = [
     ...metersToLngLat([destinationRequest.bbox[0], destinationRequest.bbox[1]]),
     ...metersToLngLat([destinationRequest.bbox[2], destinationRequest.bbox[3]])
   ];
   const zoom = destinationRequest.tile[2];
-  const sourceTiles: Tile[] = tilebelt.bboxToTiles(lngLatBbox, zoom + (options.zoomOffset ?? 0));
+  const sourceTiles: Tile[] = tilebelt.bboxToTiles(lngLatBbox, zoom + (zoomOffset ?? -1));
   return sourceTiles.map((tile) => {
     const bbox: Bbox = tilebelt.tileToBBox(tile);
     return { tile, bbox };
   });
 };
 
-const defaultOptions: PresetOptions = {
-  zoomOffset: -1
-};
-
-export type Epsg4326ToEpsg3857PresetOptions = Partial<PresetOptions>;
-
-export const epsg4326ToEpsg3857Presets = (
-  options?: Epsg4326ToEpsg3857PresetOptions
-): {
-  destinationToPixel: DestinationToPixelFn;
-  pixelToDestination: PixelToDestinationFn;
-  destinationToSource: DestinationToSourceFn;
-  sourceToPixel: SourceToPixelFn;
-  destinationTileToSourceTiles: DestinationTileToSourceTilesFn;
-} => {
-  const _options: PresetOptions = {
-    zoomOffset: options?.zoomOffset ?? defaultOptions.zoomOffset
-  };
-  return {
-    destinationToPixel,
-    pixelToDestination,
-    destinationToSource,
-    sourceToPixel,
-    destinationTileToSourceTiles: (props) => destinationTileToSourceTiles(props, _options)
-  };
+export const epsg4326ToEpsg3857Presets = {
+  destinationToPixel,
+  pixelToDestination,
+  destinationToSource,
+  sourceToPixel,
+  destinationTileToSourceTiles
 };

@@ -14,12 +14,16 @@ export type DestinationToPixelFn = ([dx, dy]: number[], zoom: number, tileSize: 
 export type PixelToDestinationFn = ([px, py]: number[], zoom: number, tileSize: number) => number[];
 export type DestinationToSourceFn = ([dx, dy]: number[]) => number[];
 export type SourceToPixelFn = ([sx, sy]: number[], zoom: number, tileSize: number) => number[];
-export type DestinationTileToSourceTilesFn = (props: {
-  tile: Tile;
-  bbox: Bbox;
-}) => { tile: Tile; bbox: Bbox }[];
 
-export interface MapTileAdapterContext {
+export type DestinationTileToSourceTilesFn = (
+  destinationRequest: {
+    tile: Tile;
+    bbox: Bbox;
+  },
+  zoomOffset?: number
+) => { tile: Tile; bbox: Bbox }[];
+
+export interface ProtocolContext {
   cache: TileCache<HTMLImageElement | null>;
   destinationTileSize: number;
   destinationTileToSourceTiles: DestinationTileToSourceTilesFn;
@@ -29,4 +33,5 @@ export interface MapTileAdapterContext {
   pixelToDestination: PixelToDestinationFn;
   sourceTileSize: number;
   sourceToPixel: SourceToPixelFn;
+  zoomOffset?: number;
 }

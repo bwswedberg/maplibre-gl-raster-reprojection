@@ -31,7 +31,7 @@
     "e2e:install": "playwright install --with-deps chromium",
     "e2e:ui": "playwright test --ui",
     "e2e:ci": "playwright test",
-    "preflight": "npm run format && npm run typecheck && npm run lint:ci && npm run test:ci && npm run e2e"
+    "preflight": "npm run format && npm run typecheck && npm run lint:ci && npm run test:ci"
   },
   "peerDependencies": {
     "maplibre-gl": "> 4.0.0"

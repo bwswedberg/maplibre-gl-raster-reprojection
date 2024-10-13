@@ -1,6 +1,6 @@
 import { Canvas } from "canvas";
 import { epsg4326ToEpsg3857Presets } from "lib/presets";
-import { MapTileAdapterContext } from "lib/types";
+import { ProtocolContext } from "lib/types";
 import { TileCache } from "lib/util";
 import trondheim from "test/assets/trondheim.json";
 import { createTestCanvasImage, getMaptilerEpsg4326Url, getTestHTMLImageElement } from "test/util";
@@ -19,7 +19,7 @@ describe("drawSource", () => {
       })
     );
 
-    const ctx: MapTileAdapterContext = {
+    const ctx: ProtocolContext = {
       cache: new TileCache<HTMLImageElement | null>({
         fetchTile: () => Promise.resolve(null),
         maxCache: 10
@@ -27,7 +27,7 @@ describe("drawSource", () => {
       destinationTileSize: 256,
       interval: [256, 256],
       sourceTileSize: 256,
-      ...epsg4326ToEpsg3857Presets()
+      ...epsg4326ToEpsg3857Presets
     };
 
     const output = drawSource(ctx, sourceRequests);

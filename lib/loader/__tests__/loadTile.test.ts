@@ -1,6 +1,6 @@
 import { Canvas } from "canvas";
 import { epsg4326ToEpsg3857Presets } from "lib/presets";
-import { Tile, Bbox, MapTileAdapterContext } from "lib/types";
+import { Tile, Bbox, ProtocolContext } from "lib/types";
 import { TileCache } from "lib/util";
 import trondheim from "test/assets/trondheim.json";
 import { createTestCanvasImage, getMaptilerEpsg4326Url, getTestHTMLImageElement } from "test/util";
@@ -10,9 +10,7 @@ vi.mock("lib/util/dom");
 
 const { destinationTileSize, sourceTileSize } = trondheim.metadata;
 
-const createMapTileAdapterContext = (
-  props: Partial<MapTileAdapterContext> = {}
-): MapTileAdapterContext => {
+const createProtocolContext = (props: Partial<ProtocolContext> = {}): ProtocolContext => {
   return {
     cache: new TileCache<HTMLImageElement | null>({
       fetchTile: async (url) => await getTestHTMLImageElement(url),
@@ -21,7 +19,7 @@ const createMapTileAdapterContext = (
     destinationTileSize,
     interval: [256, 256],
     sourceTileSize,
-    ...epsg4326ToEpsg3857Presets(),
+    ...epsg4326ToEpsg3857Presets,
     ...props
   };
 };
@@ -39,7 +37,7 @@ describe("loadTile", () => {
   });
 
   test("should return results with using [TileSize, TileSize] interval", async () => {
-    const ctx = createMapTileAdapterContext({
+    const ctx = createProtocolContext({
       interval: [destinationTileSize, destinationTileSize]
     });
 
@@ -68,7 +66,7 @@ describe("loadTile", () => {
   });
 
   test("should return results with using [TileSize, 1] interval", async () => {
-    const ctx = createMapTileAdapterContext({
+    const ctx = createProtocolContext({
       interval: [destinationTileSize, 1]
     });
 
@@ -97,7 +95,7 @@ describe("loadTile", () => {
   });
 
   test("should bail when canceled before source tile requests", async () => {
-    const ctx = createMapTileAdapterContext({
+    const ctx = createProtocolContext({
       interval: [destinationTileSize, destinationTileSize]
     });
 
@@ -121,7 +119,7 @@ describe("loadTile", () => {
       url: "tile-should-not-exist.png"
     }));
 
-    const ctx = createMapTileAdapterContext({
+    const ctx = createProtocolContext({
       interval: [destinationTileSize, destinationTileSize]
     });
 
@@ -139,7 +137,7 @@ describe("loadTile", () => {
   });
 
   test("should bail when canceled after source tile requests", async () => {
-    const ctx = createMapTileAdapterContext({
+    const ctx = createProtocolContext({
       interval: [destinationTileSize, destinationTileSize]
     });
 
@@ -166,7 +164,7 @@ describe("loadTile", () => {
       url: "tile-should-not-exist.png"
     };
 
-    const ctx = createMapTileAdapterContext({
+    const ctx = createProtocolContext({
       interval: [destinationTileSize, destinationTileSize]
     });
 

@@ -7,6 +7,7 @@ export interface ParseCustomProtocolRequestUrlOutput {
   interval?: number[];
   sourceTileSize?: number;
   destinationTileSize?: number;
+  zoomOffset?: number;
 }
 
 export const parseCustomProtocolRequestUrl = (url: string): ParseCustomProtocolRequestUrlOutput => {
@@ -23,6 +24,7 @@ export const parseCustomProtocolRequestUrl = (url: string): ParseCustomProtocolR
   const tileSize = +(reprojParams.get("size") ?? 0);
   const sourceTileSize = +(reprojParams.get("ssize") ?? tileSize);
   const destinationTileSize = +(reprojParams.get("dsize") ?? tileSize);
+  const zoomOffset = +(reprojParams.get("zoffset") ?? 0);
   return {
     bbox,
     tile,
@@ -31,7 +33,8 @@ export const parseCustomProtocolRequestUrl = (url: string): ParseCustomProtocolR
     sourceTileSize:
       reprojParams.has("ssize") || reprojParams.has("size") ? sourceTileSize : undefined,
     destinationTileSize:
-      reprojParams.has("dsize") || reprojParams.has("size") ? destinationTileSize : undefined
+      reprojParams.has("dsize") || reprojParams.has("size") ? destinationTileSize : undefined,
+    zoomOffset: reprojParams.has("zoffset") ? zoomOffset : undefined
   };
 };
 

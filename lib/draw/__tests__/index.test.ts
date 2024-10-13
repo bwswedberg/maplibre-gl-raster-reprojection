@@ -1,6 +1,6 @@
 import { Canvas } from "canvas";
 import { epsg4326ToEpsg3857Presets } from "lib/presets";
-import { MapTileAdapterContext } from "lib/types";
+import { ProtocolContext } from "lib/types";
 import { TileCache } from "lib/util";
 import trondheim from "test/assets/trondheim.json";
 import { createTestCanvasImage, getMaptilerEpsg4326Url, getTestHTMLImageElement } from "test/util";
@@ -10,9 +10,7 @@ vi.mock("lib/util/dom");
 
 const { destinationTileSize, sourceTileSize } = trondheim.metadata;
 
-const createMapTileAdapterContext = (
-  props: Partial<MapTileAdapterContext> = {}
-): MapTileAdapterContext => {
+const createProtocolContext = (props: Partial<ProtocolContext> = {}): ProtocolContext => {
   return {
     cache: new TileCache<HTMLImageElement | null>({
       fetchTile: () => Promise.resolve(null),
@@ -21,7 +19,7 @@ const createMapTileAdapterContext = (
     destinationTileSize,
     interval: [256, 256],
     sourceTileSize,
-    ...epsg4326ToEpsg3857Presets(),
+    ...epsg4326ToEpsg3857Presets,
     ...props
   };
 };
@@ -37,7 +35,7 @@ describe("drawTile", () => {
       })
     );
 
-    const ctx = createMapTileAdapterContext();
+    const ctx = createProtocolContext();
 
     const output = drawTile(ctx, sourceRequests, {
       tile: destination.tile,
@@ -68,7 +66,7 @@ describe("drawTile", () => {
         })
       );
 
-      const ctx = createMapTileAdapterContext({
+      const ctx = createProtocolContext({
         interval: [256, 1]
       });
 

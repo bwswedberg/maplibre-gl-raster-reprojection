@@ -41,14 +41,15 @@
       </label>
     </div>
     <script defer>
-      var mtaProtocol = window.maplibreRasterReprojection.maplibreTileAdapterProtocol({
+      const { createProtocol, epsg4326ToEpsg3857Presets } = window.maplibreRasterReprojection;
+      const { protocol, loader } = createProtocol({
         tileSize: 256,
         interval: [256, 1],
-        ...window.maplibreRasterReprojection.epsg4326ToEpsg3857Presets()
+        ...epsg4326ToEpsg3857Presets
       });
-      maplibregl.addProtocol(mtaProtocol.protocol, mtaProtocol.loader);
+      maplibregl.addProtocol(protocol, loader);
 
-      var map = new maplibregl.Map({
+      const map = new maplibregl.Map({
         container: document.getElementById("map"),
         style: {
           version: 8,
@@ -56,7 +57,7 @@
             "basic4326-256": {
               type: "raster",
               tiles: [
-                "mta://bbox={bbox-epsg-3857}&z={z}&x={x}&y={y}://https://api.maptiler.com/maps/basic-4326/256/{sz}/{sx}/{sy}.png?key=PGe3q0z3e1cGtjXjPS5D"
+                "reproject://bbox={bbox-epsg-3857}&z={z}&x={x}&y={y}://https://api.maptiler.com/maps/basic-4326/256/{sz}/{sx}/{sy}.png?key=PGe3q0z3e1cGtjXjPS5D"
               ],
               tileSize: 256,
               scheme: "xyz"
@@ -86,7 +87,7 @@
       });
 
       function updateVisibility(layerId, isVisible) {
-        var visibility = isVisible ? "visible" : "none";
+        const visibility = isVisible ? "visible" : "none";
         map.setLayoutProperty(layerId, "visibility", visibility);
       }
 
@@ -94,9 +95,9 @@
         updateVisibility(event.target.name, event.target.checked);
       }
 
-      var checkboxes = document.getElementsByClassName("layerCheckbox");
+      const checkboxes = document.getElementsByClassName("layerCheckbox");
 
-      for (var i = 0; i < checkboxes.length; i++) {
+      for (let i = 0; i < checkboxes.length; i++) {
         checkboxes[i].addEventListener("change", handleLayerCheckboxChange);
       }
     </script>
