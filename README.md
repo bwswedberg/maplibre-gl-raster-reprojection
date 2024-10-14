@@ -95,6 +95,10 @@ Create and initialize input for `maplibregl.addProtocol`.
 | `tileUrlPrefix` | `string` <br> String value which can be used to prefix urls      |
 | `loader`        | `maplibregl.AddProtocolAction` <br> See maplibregl documentation |
 
+### `epsg4326ToEpsg3857Presets: Partial<CreateProtocolOptions>`
+
+Preset options for the transformation functions needed to convert EPSG:4326 to EPSG:3857.
+
 ### Common
 
 #### `Tile: number[] | [number, number, number]`
