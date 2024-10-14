@@ -90,9 +90,9 @@ Create and initialize input for `maplibregl.addProtocol`.
 #### `CreateProtocolResult`
 
 | field           | description                                                      |
-| --------------- | ---------------------------------------------------------------- | --- |
+| --------------- | ---------------------------------------------------------------- |
 | `protocol`      | `string` <br> Url prefix that identifying a custom protocol.     |
-| `tileUrlPrefix` | `string` <br> String value which can be used to prefix urls      | .   |
+| `tileUrlPrefix` | `string` <br> String value which can be used to prefix urls      |
 | `loader`        | `maplibregl.AddProtocolAction` <br> See maplibregl documentation |
 
 ### Common
@@ -157,4 +157,4 @@ npm run e2e
 1. Update the `CHANGELOG.md` with new version and commit the change.
 1. Run `npm version ...` or somethign similar or tag manually
 1. Push tag to remote `git push --tags`
-1. Manually create a release in github which will trigger npm publish in github action
+1. [Optional] Run the `publish` workflow with tag
