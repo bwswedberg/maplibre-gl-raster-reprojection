@@ -1,5 +1,5 @@
 /** @type {import('prettier').Config} */
-module.exports = {
+export default {
   trailingComma: "none",
   printWidth: 100,
   tabWidth: 2,
