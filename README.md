@@ -19,6 +19,11 @@ In a perfect world your map tiles would be in the same projection as your map. H
 
 With `maplibre-gl-raster-reprojection`, you can proxy those tiles on the fly so that you can use those tiles.
 
+This library is inteded to be a stopgap solution until non-mercator projections are supported in maplibregl. See latest updates:
+
+- [Roadmap - Non-Mercator Projection](https://maplibre.org/roadmap/non-mercator-projection/)
+- [Bounty Direction: Custom Coordinate System/EPSG/Non-Mercator Projection #272](https://github.com/maplibre/maplibre/issues/272)
+
 ## Install
 
 ```bash
@@ -32,10 +37,10 @@ import maplibregl from 'maplibre-gl';
 import { createProtocol, epsg4326ToEpsg3857Presets } from 'maplibre-gl-raster-reprojection';
 
 const { protocol, loader } = createProtocol({
-  // Draw EPSG:3857 tile in 256 pixel width by 1 pixel height intervals (more accurate latitude)
-  interval: [256, 1],
   // Converts EPSG:4326 tile endpoint to EPSG:3857
   ...epsg4326ToEpsg3857Presets,
+  // Draw EPSG:3857 tile in 256 pixel width by 1 pixel height intervals (more accurate latitude)
+  interval: [256, 1],
 });
 
 maplibregl.addProtocol(protocol, loader);
@@ -53,7 +58,7 @@ const map = new maplibregl.Map({
       }
     },
     layers: [
-      { id: 'reprojLayer', source: 'epsg4326Source', type: 'raster' }
+      { id: 'reprojectedLayer', source: 'epsg4326Source', type: 'raster' }
     ]
   }
 })
@@ -61,7 +66,64 @@ const map = new maplibregl.Map({
 
 ## API
 
-[todo]
+### `createProtocol: (options: CreateProtocolOptions) => CreateProtocolResult`
+
+Create and initialize input for `maplibregl.addProtocol`.
+
+#### `CreateProtocolOptions`
+
+| field                          | description                                                                                                                                                                                                                                                                               |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `protocol`                     | `string` <br> Url prefix that identifying a custom protocol. _(Default: 'reproject')_                                                                                                                                                                                                     |
+| `cacheSize`                    | `number` <br> Total images stored in the internal reprojection cache. _(Default: 10)_                                                                                                                                                                                                     |
+| `destinationTileSize`          | `number` <br> The destination tile size. _(Default: See `tileSize`)_                                                                                                                                                                                                                      |
+| `destinationTileToSourceTiles` | `DestinationTileToSourceTilesFn` <br> See common type below                                                                                                                                                                                                                               |
+| `destinationToPixel`           | `DestinationToPixelFn` <br> See common type below                                                                                                                                                                                                                                         |
+| `destinationToSource`          | `DestinationToSourceFn` <br> See common type below                                                                                                                                                                                                                                        |
+| `interval`                     | `[intervalX: number, intervalY: number]` <br> The pixel sampling interval when reprojecting the source to destination. Max interval value is the destination tile size. _(Default: `[destinationTileSize, destinationTileSize]`)_                                                         |
+| `pixelToDestination`           | `PixelToDestinationFn` <br> See common type below                                                                                                                                                                                                                                         |
+| `sourceTileSize`               | `number` <br> The source tile size. _(Default: See `tileSize`)_                                                                                                                                                                                                                           |
+| `sourceToPixel`                | `SourceToPixelFn` <br> See common type below                                                                                                                                                                                                                                              |
+| `tileSize`                     | `number` <br> Shorthand for setting `sourceTileSize` and `destinationTileSize` to the same value. _(Default: 256)_                                                                                                                                                                        |
+| `zoomOffset`                   | `number` <br> An offset zoom value applied to the reprojection which makes the tile text appear smaller or bigger. The offset is applied when determining which source tiles are needed to cover a destination tile in `destinationTileToSourceTiles`. Must be an integer. _(Default: 0)_ |
+
+#### `CreateProtocolResult`
+
+| field           | description                                                      |
+| --------------- | ---------------------------------------------------------------- | --- |
+| `protocol`      | `string` <br> Url prefix that identifying a custom protocol.     |
+| `tileUrlPrefix` | `string` <br> String value which can be used to prefix urls      | .   |
+| `loader`        | `maplibregl.AddProtocolAction` <br> See maplibregl documentation |
+
+### Common
+
+#### `Tile: number[] | [number, number, number]`
+
+A reference to a map tile. [x, y, z]
+
+#### `Bbox: number[] | [number, number, number, number]`
+
+A bounding box. [xmin, ymin, xmax, ymax]
+
+#### `DestinationTileToSourceTilesFn: (destinationRequest: { tile: Tile, bbox: Bbox }, zoomOffset?: number) => { tile: Tile, bbox: Bbox }[]`
+
+Calculate the source tile references needed to cover destination tile reference. A `zoomOffset` is used to apply any source-to-destination zoom adjustments.
+
+#### `DestinationToPixelFn: ([dx, dy]: number[], zoom: number, tileSize: number) => number[]`
+
+Transform a destination tile reference to pixel coordinate [x, y].
+
+#### `DestinationToSourceFn: ([dx, dy]: number[]) => number[]`
+
+Transform a destination coordinate [x, y] to a source coordinate [x, y].
+
+#### `PixelToDestinationFn: ([px, py]: number[], zoom: number, tileSize: number) => number[]`
+
+Transform a pixel coordinate [x, y] to destination coordinate [x, y].
+
+#### `SourceToPixelFn: ([sx, sy]: number[], zoom: number, tileSize: number) => number[]`
+
+Transform a source coordinate [x, y] to a pixel coordinate [x, y].
 
 ## Tradeoffs
 

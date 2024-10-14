@@ -1,3 +1,4 @@
+import type { AddProtocolAction } from "maplibre-gl";
 import type {
   DestinationTileToSourceTilesFn,
   DestinationToPixelFn,
@@ -26,7 +27,13 @@ export interface CreateProtocolOptions {
   zoomOffset?: number;
 }
 
-export const createProtocol = (options: CreateProtocolOptions) => {
+export interface CreateProtocolResult {
+  protocol: string;
+  tileUrlPrefix: string;
+  loader: AddProtocolAction;
+}
+
+export const createProtocol = (options: CreateProtocolOptions): CreateProtocolResult => {
   const cache = new TileCache<HTMLImageElement | null>({
     fetchTile: (url) => fetchImage(url),
     maxCache: options.cacheSize ?? 10
@@ -44,9 +51,10 @@ export const createProtocol = (options: CreateProtocolOptions) => {
     sourceToPixel: options.sourceToPixel,
     zoomOffset: options.zoomOffset
   };
+  const protocol = `${options?.protocol ?? PROTOCOL_NAME}`;
   return {
-    protocol: `${options?.protocol ?? PROTOCOL_NAME}`,
-    tileUrlPrefix: `${options?.protocol ?? PROTOCOL_NAME}://bbox={bbox-epsg-3857}&z={z}&x={x}&y={y}`,
-    loader: loader.bind(null, ctx)
+    protocol,
+    tileUrlPrefix: `${protocol}://bbox={bbox-epsg-3857}&z={z}&x={x}&y={y}`,
+    loader: (...args) => loader(ctx, ...args)
   };
 };

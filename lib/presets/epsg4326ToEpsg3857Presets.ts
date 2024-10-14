@@ -40,14 +40,14 @@ const sourceToPixel: SourceToPixelFn = (lngLat, zoom, tileSize) => {
 
 const destinationTileToSourceTiles: DestinationTileToSourceTilesFn = (
   destinationRequest,
-  zoomOffset
+  zoomOffset = -1
 ) => {
   const lngLatBbox = [
     ...metersToLngLat([destinationRequest.bbox[0], destinationRequest.bbox[1]]),
     ...metersToLngLat([destinationRequest.bbox[2], destinationRequest.bbox[3]])
   ];
   const zoom = destinationRequest.tile[2];
-  const sourceTiles: Tile[] = tilebelt.bboxToTiles(lngLatBbox, zoom + (zoomOffset ?? -1));
+  const sourceTiles: Tile[] = tilebelt.bboxToTiles(lngLatBbox, zoom + zoomOffset);
   return sourceTiles.map((tile) => {
     const bbox: Bbox = tilebelt.tileToBBox(tile);
     return { tile, bbox };
