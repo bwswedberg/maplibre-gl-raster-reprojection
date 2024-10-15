@@ -1,6 +1,6 @@
 {
   "name": "maplibre-gl-raster-reprojection",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Reproject maplibre raster tiles on the fly in the browser",
   "sideEffects": false,
   "type": "module",
