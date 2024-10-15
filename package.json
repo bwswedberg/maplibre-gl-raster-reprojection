@@ -41,6 +41,10 @@
       "optional": true
     }
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bwswedberg/maplibre-gl-raster-reprojection"
+  },
   "keywords": [
     "map",
     "tile",
@@ -51,6 +55,10 @@
   ],
   "author": "bwswedberg",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bwswedberg/maplibre-gl-raster-reprojection/issues"
+  },
+  "homepage": "https://github.com/bwswedberg/maplibre-gl-raster-reprojection",
   "devDependencies": {
     "@playwright/test": "^1.48.0",
     "@types/jest-image-snapshot": "^6.4.0",
