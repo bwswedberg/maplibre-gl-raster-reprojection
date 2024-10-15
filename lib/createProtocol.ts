@@ -10,8 +10,6 @@ import type {
 import { fetchImage, TileCache } from "lib/util";
 import { loader } from "./loader";
 
-const PROTOCOL_NAME = "reproject";
-
 export interface CreateProtocolOptions {
   protocol?: string;
   cacheSize?: number;
@@ -27,34 +25,38 @@ export interface CreateProtocolOptions {
   zoomOffset?: number;
 }
 
+const defaultOptions = {
+  protocol: "reproject",
+  cacheSize: 10,
+  interval: [1, 1],
+  tileSize: 256
+} satisfies Partial<CreateProtocolOptions>;
+
 export interface CreateProtocolResult {
   protocol: string;
-  tileUrlPrefix: string;
   loader: AddProtocolAction;
 }
 
-export const createProtocol = (options: CreateProtocolOptions): CreateProtocolResult => {
+export const createProtocol = (_options: CreateProtocolOptions): CreateProtocolResult => {
+  const options = { ..._options, ...defaultOptions };
   const cache = new TileCache<HTMLImageElement | null>({
     fetchTile: (url) => fetchImage(url),
-    maxCache: options.cacheSize ?? 10
+    maxCache: options.cacheSize
   });
-  const destinationTileSize = options?.destinationTileSize ?? options?.tileSize ?? 256;
   const ctx: ProtocolContext = {
     cache,
-    destinationTileSize,
+    destinationTileSize: options?.destinationTileSize ?? options.tileSize,
     destinationTileToSourceTiles: options.destinationTileToSourceTiles,
     destinationToPixel: options.destinationToPixel,
     destinationToSource: options.destinationToSource,
-    interval: options?.interval ?? [destinationTileSize, destinationTileSize],
+    interval: options.interval,
     pixelToDestination: options.pixelToDestination,
-    sourceTileSize: options?.sourceTileSize ?? destinationTileSize,
+    sourceTileSize: options?.sourceTileSize ?? options.tileSize,
     sourceToPixel: options.sourceToPixel,
     zoomOffset: options.zoomOffset
   };
-  const protocol = `${options?.protocol ?? PROTOCOL_NAME}`;
   return {
-    protocol,
-    tileUrlPrefix: `${protocol}://bbox={bbox-epsg-3857}&z={z}&x={x}&y={y}`,
+    protocol: options.protocol,
     loader: (...args) => loader(ctx, ...args)
   };
 };

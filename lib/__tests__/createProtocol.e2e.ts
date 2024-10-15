@@ -7,7 +7,7 @@ declare global {
   interface Window {
     maplibregl: typeof maplibregl;
 
-    maplibreRasterReprojection: {
+    maplibreglRasterReprojection: {
       createProtocol: typeof createProtocol;
       epsg4326ToEpsg3857Presets: typeof epsg4326ToEpsg3857Presets;
     };
@@ -18,13 +18,13 @@ test("should render a maplibre map", async ({ page }, testinfo) => {
   await page.goto("/test/pages/maplibre.html");
 
   await page.evaluate(() => {
-    const { createProtocol, epsg4326ToEpsg3857Presets } = window.maplibreRasterReprojection;
+    const { createProtocol, epsg4326ToEpsg3857Presets } = window.maplibreglRasterReprojection;
 
-    const { protocol, loader, tileUrlPrefix } = createProtocol({
+    const { protocol, loader } = createProtocol({
+      ...epsg4326ToEpsg3857Presets,
       sourceTileSize: 256,
       destinationTileSize: 256,
-      interval: [256, 1],
-      ...epsg4326ToEpsg3857Presets
+      interval: [256, 1]
     });
 
     window.maplibregl.addProtocol(protocol, loader);
@@ -37,7 +37,7 @@ test("should render a maplibre map", async ({ page }, testinfo) => {
           epsg4326source: {
             type: "raster",
             tiles: [
-              `${tileUrlPrefix}://http://127.0.0.1:3000/test/assets/maptiler-epsg4326/{sz}/{sx}/{sy}.png`
+              `reproject://bbox={bbox-epsg-3857}&z={z}&x={x}&y={y}://http://127.0.0.1:3000/test/assets/maptiler-epsg4326/{sz}/{sx}/{sy}.png`
             ],
             tileSize: 256,
             scheme: "xyz"

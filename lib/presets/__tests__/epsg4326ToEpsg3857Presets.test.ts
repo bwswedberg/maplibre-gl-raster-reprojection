@@ -93,14 +93,17 @@ describe("destinationTileToSourceTiles", () => {
   const cases: DestinationTileToSourceTilesTestCase[] = [
     {
       destinationTile: { tile: [0, 0, 0], bbox: [-180, -90, 180, 90] },
+      options: { zoomOffset: -1 },
       sourceTiles: []
     },
     {
       destinationTile: { tile: [0, 0, 1], bbox: [-180, 0, 0, 90] },
+      options: { zoomOffset: -1 },
       sourceTiles: [{ tile: [0, 0, 0], bbox: [-180, -90, 0, 90] }]
     },
     {
       destinationTile: { tile: nw.case0.tileXyz, bbox: nw.case0.tileBBox },
+      options: { zoomOffset: -1 },
       sourceTiles: [
         { tile: [36, 17, 6], bbox: [-78.75, 39.375, -75.9375, 42.1875] },
         { tile: [36, 18, 6], bbox: [-78.75, 36.5625, -75.9375, 39.375] }
@@ -108,6 +111,7 @@ describe("destinationTileToSourceTiles", () => {
     },
     {
       destinationTile: { tile: ne.case0.tileXyz, bbox: ne.case0.tileBBox },
+      options: { zoomOffset: -1 },
       sourceTiles: [
         { tile: [64, 14, 6], bbox: [0, 47.8125, 2.8125, 50.625] },
         { tile: [64, 15, 6], bbox: [0, 45, 2.8125, 47.8125] }
@@ -115,6 +119,7 @@ describe("destinationTileToSourceTiles", () => {
     },
     {
       destinationTile: { tile: sw.case0.tileXyz, bbox: sw.case0.tileBBox },
+      options: { zoomOffset: -1 },
       sourceTiles: [
         { tile: [48, 39, 6], bbox: [-45, -22.5, -42.1875, -19.6875] },
         { tile: [48, 40, 6], bbox: [-45, -25.3125, -42.1875, -22.5] }
@@ -122,14 +127,15 @@ describe("destinationTileToSourceTiles", () => {
     },
     {
       destinationTile: { tile: se.case0.tileXyz, bbox: se.case0.tileBBox },
+      options: { zoomOffset: -1 },
       sourceTiles: [
         { tile: [117, 43, 6], bbox: [149.0625, -33.75, 151.875, -30.9375] },
         { tile: [117, 44, 6], bbox: [149.0625, -36.5625, 151.875, -33.75] }
       ]
     },
     {
-      options: { zoomOffset: 0 },
       destinationTile: { tile: [0, 0, 0], bbox: [-180, -90, 180, 90] },
+      options: { zoomOffset: 0 },
       sourceTiles: [
         { tile: [0, 0, 0], bbox: [-180, -90, 0, 90] },
         { tile: [1, 0, 0], bbox: [0, -90, 180, 90] }

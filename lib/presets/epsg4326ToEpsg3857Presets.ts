@@ -40,7 +40,7 @@ const sourceToPixel: SourceToPixelFn = (lngLat, zoom, tileSize) => {
 
 const destinationTileToSourceTiles: DestinationTileToSourceTilesFn = (
   destinationRequest,
-  zoomOffset = -1
+  zoomOffset = 0
 ) => {
   const lngLatBbox = [
     ...metersToLngLat([destinationRequest.bbox[0], destinationRequest.bbox[1]]),
@@ -59,5 +59,6 @@ export const epsg4326ToEpsg3857Presets = {
   pixelToDestination,
   destinationToSource,
   sourceToPixel,
-  destinationTileToSourceTiles
+  destinationTileToSourceTiles,
+  zoomOffset: -1
 };

@@ -19,7 +19,7 @@ export default defineConfig({
     copyPublicDir: false,
     lib: {
       entry: resolve(__dirname, "./lib/index.ts"),
-      name: "maplibreRasterReprojection",
+      name: "maplibreglRasterReprojection",
       formats: ["es", "umd"],
       fileName: "maplibre-gl-raster-reprojection"
     }
