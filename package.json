@@ -4,13 +4,13 @@
   "description": "Reproject maplibre raster tiles on the fly in the browser",
   "sideEffects": false,
   "type": "module",
-  "main": "dist/maplibre-gl-raster-reprojection.umd.js",
+  "main": "dist/maplibre-gl-raster-reprojection.umd.cjs",
   "module": "dist/maplibre-gl-raster-reprojection.js",
   "types": "dist/maplibre-gl-raster-reprojection.d.ts",
   "exports": {
     ".": {
       "import": "./dist/maplibre-gl-raster-reprojection.js",
-      "require": "./dist/maplibre-gl-raster-reprojection.umd.js"
+      "require": "./dist/maplibre-gl-raster-reprojection.umd.cjs"
     }
   },
   "files": [

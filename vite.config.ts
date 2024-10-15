@@ -21,10 +21,7 @@ export default defineConfig({
       entry: resolve(__dirname, "./lib/index.ts"),
       name: "maplibreglRasterReprojection",
       formats: ["es", "umd"],
-      // The cdn unpkg does not handle ".cjs" as expected for umd builds
-      // Use ".js" ending for now until this is fixed.
-      // See: https://github.com/mjackson/unpkg/issues/355
-      fileName: (format) => `maplibre-gl-raster-reprojection${format === "umd" ? ".umd" : ""}.js`
+      fileName: "maplibre-gl-raster-reprojection"
     }
   },
   test: {
