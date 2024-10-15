@@ -175,7 +175,7 @@ Transform a source coordinate [x, y] to a pixel coordinate [x, y].
 
 Map tiles are best used in their native projection. Reprojecting a tile almost always be suboptimal and most easily visualized in the following ways.
 
-Use params like `interval`, `zoomOffset`, etc. to dial in the adapter to your needs.
+Use params like `interval`, `zoomOffset`, etc. to adjust the reprojection based on your needs.
 
 ### Visual effects
 
